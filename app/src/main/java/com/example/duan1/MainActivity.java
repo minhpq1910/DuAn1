@@ -11,5 +11,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         String hi = "code mới";
+        //pham quang minh
+        //hi
     }
 }
