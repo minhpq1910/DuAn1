@@ -11,6 +11,13 @@ public class Dbhelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        //bảng Admin
+//        String tb_Admin = "create table admin(" +
+//                "ma text primary key," +
+//                "HoTen text not null," +
+//                "MatKhau text not null)";
+//        db.execSQL(tb_Admin);
+
         // Tạo bảng nhân viên
         String tb_NhanVien = "create table NhanVien(" +
                 "MaNV text primary key," +
