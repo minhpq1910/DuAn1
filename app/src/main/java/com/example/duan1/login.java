@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
+import com.example.duan1.dao.adminDao;
 import com.example.duan1.dao.nhanVienDao;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -20,6 +21,8 @@ public class login extends AppCompatActivity {
     Button btnLogin, btnCancel;
     CheckBox chkSave;
     nhanVienDao nvDao = new nhanVienDao(this);
+    adminDao aDao = new adminDao(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,10 +35,10 @@ public class login extends AppCompatActivity {
         btnCancel = findViewById(R.id.btn_Cancel);
         chkSave = findViewById(R.id.chkSave);
 
-        SharedPreferences pref = getSharedPreferences("User_File",MODE_PRIVATE);
-        ed_txtuser.setText(pref.getString("Username",""));
-        ed_txtpass.setText(pref.getString("Password",""));
-        chkSave.setChecked(pref.getBoolean("Remember",false));
+        SharedPreferences pref = getSharedPreferences("User_File", MODE_PRIVATE);
+        ed_txtuser.setText(pref.getString("Username", ""));
+        ed_txtpass.setText(pref.getString("Password", ""));
+        chkSave.setChecked(pref.getBoolean("Remember", false));
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,30 +48,37 @@ public class login extends AppCompatActivity {
         });
     }
 
-    public void login(){
+    public void login() {
         String user = ed_txtuser.getText().toString();
         String pass = ed_txtpass.getText().toString();
-        if(user.isEmpty() || pass.isEmpty()){
-            if(user.equals("")){
+        if (user.isEmpty() || pass.isEmpty()) {
+            if (user.equals("")) {
                 in_user.setError("Không được để trống tên đăng nhập");
-            }else{
+            } else {
                 in_user.setError(null);
             }
 
-            if(pass.equals("")){
+            if (pass.equals("")) {
                 in_pass.setError("Không được để trống mật khẩu");
-            }else{
+            } else {
                 in_pass.setError(null);
             }
-        }else{
-            if(nvDao.checkLogin(user,pass)){
+        } else {
+            if (nvDao.checkLogin(user, pass)) {
                 Toast.makeText(this, "Login thành công", Toast.LENGTH_SHORT).show();
-                rememberUser(user,pass,chkSave.isChecked());
-                Intent i = new Intent(login.this, MainActivity.class);
-                i.putExtra("MaNV",user);
+                rememberUser(user, pass, chkSave.isChecked());
+                Intent i = new Intent(login.this, screen_nhanvien.class);
+                i.putExtra("MaNV", user);
                 startActivity(i);
                 finish();
-            }else{
+            } else if (aDao.checkLogin(user, pass)) {
+                Toast.makeText(this, "Login thành công", Toast.LENGTH_SHORT).show();
+                rememberUser(user, pass, chkSave.isChecked());
+                Intent i = new Intent(login.this, MainActivity.class);
+                i.putExtra("MaNV", user);
+                startActivity(i);
+                finish();
+            } else {
                 in_user.setError("Tên đăng nhập hoặc mật khẩu không đúng");
                 in_pass.setError("Tên đăng nhập hoặc mật khẩu không đúng");
             }
@@ -76,15 +86,15 @@ public class login extends AppCompatActivity {
     }
 
     private void rememberUser(String u, String p, boolean status) {
-        SharedPreferences pref = getSharedPreferences("User_File",MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences("User_File", MODE_PRIVATE);
         SharedPreferences.Editor edit = pref.edit();
-        if(!status){
+        if (!status) {
             edit.clear();
-        }else{
+        } else {
             //lưu dữ liệu
-            edit.putString("Username",u);
-            edit.putString("Password",p);
-            edit.putBoolean("Remember",status);
+            edit.putString("Username", u);
+            edit.putString("Password", p);
+            edit.putBoolean("Remember", status);
         }
         //lưu lại toàn bộ
         edit.commit();

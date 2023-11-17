@@ -4,4 +4,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="open">Open nav</string>
     <string name="close">Close nav</string>
+    <string name="open_nv">Open nav</string>
+    <string name="close_nv">Close nav</string>
 </resources>

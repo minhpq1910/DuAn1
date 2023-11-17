@@ -6,17 +6,17 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Dbhelper extends SQLiteOpenHelper {
     public Dbhelper(Context context) {
-        super(context, "shop", null, 1);
+        super(context, "shop", null, 4);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         //bảng Admin
-//        String tb_Admin = "create table admin(" +
-//                "ma text primary key," +
-//                "HoTen text not null," +
-//                "MatKhau text not null)";
-//        db.execSQL(tb_Admin);
+        String tb_Admin = "create table admin(" +
+                "ma text primary key," +
+                "taiKhoan text not null," +
+                "MatKhau text not null)";
+        db.execSQL(tb_Admin);
 
         // Tạo bảng nhân viên
         String tb_NhanVien = "create table NhanVien(" +
@@ -51,6 +51,7 @@ public class Dbhelper extends SQLiteOpenHelper {
         db.execSQL(tb_HoaDon);
 
         //data mẫu
+        db.execSQL("INSERT INTO admin VALUES ('admin','Minh','1111')");
         db.execSQL("INSERT INTO LoaiHang VALUES (1, 'Đồ ăn'),(2,'Nước uống'),(3, 'Đồ phụ gia')");
         db.execSQL("INSERT INTO SanPham VALUES (1, 'BimBim', 25, 5000, 1), (2, 'Coca-cola', 100, 16000, 2), (3, 'Mì chính', 50, 50000, 3)");
         db.execSQL("INSERT INTO NhanVien VALUES ('PQMinh','Phạm Quang Minh','1234'),('nv01','Trần Văn A','123abc')");
@@ -64,6 +65,7 @@ public class Dbhelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         if (i != i1){
             sqLiteDatabase.execSQL("drop table if exists NhanVien");
+            sqLiteDatabase.execSQL("drop table if exists admin");
             sqLiteDatabase.execSQL("drop table if exists LoaiHang");
             sqLiteDatabase.execSQL("drop table if exists SanPham");
             sqLiteDatabase.execSQL("drop table if exists HoaDon");
