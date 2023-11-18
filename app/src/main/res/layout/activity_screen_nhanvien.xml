@@ -17,7 +17,8 @@
             android:id="@+id/toolbar_nv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ddd" />
+            android:background="#ddd"
+            app:title="Quản lý hoá đơn" />
 
         <FrameLayout
             android:id="@+id/frameLayout_nv"

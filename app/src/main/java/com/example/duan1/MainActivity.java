@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.example.duan1.fragment.frg_addNv;
 import com.example.duan1.fragment.frg_changePass;
-import com.example.duan1.fragment.frg_danhthu;
+import com.example.duan1.fragment.frg_doanhthu;
 import com.example.duan1.fragment.frg_hoadon;
 import com.example.duan1.fragment.frg_loaihang;
 import com.example.duan1.fragment.frg_nhanvien;
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                     builder.setNegativeButton("Hủy", null);
                     builder.create().show();
                 } else if (item.getItemId() == R.id.menuDT) {
-                    frg_danhthu frgDT = new frg_danhthu();
+                    frg_doanhthu frgDT = new frg_doanhthu();
                     relaceFrg(frgDT);
                     toolbar.setTitle("Doanh thu");
                 }

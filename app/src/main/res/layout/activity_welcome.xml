@@ -17,9 +17,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Chào mừng bạn đến với SmartShop"
+        android:text="SmartShop"
         android:textStyle="bold"
-        android:textSize="20dp"
+        android:textSize="30dp"
+        android:textColor="#E91E4D"
+        android:fontFamily="sans-serif"
         android:layout_marginTop="30dp"/>
 
 </LinearLayout>

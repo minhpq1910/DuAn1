@@ -18,12 +18,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.duan1.fragment.frg_addNv;
 import com.example.duan1.fragment.frg_changePass;
-import com.example.duan1.fragment.frg_danhthu;
+import com.example.duan1.fragment.frg_doanhthu;
 import com.example.duan1.fragment.frg_hoadon;
 import com.example.duan1.fragment.frg_loaihang;
-import com.example.duan1.fragment.frg_nhanvien;
 import com.example.duan1.fragment.frg_sanpham;
 import com.google.android.material.navigation.NavigationView;
 
@@ -83,7 +81,7 @@ public class screen_nhanvien extends AppCompatActivity {
                     builder.setNegativeButton("Hủy", null);
                     builder.create().show();
                 } else if (item.getItemId() == R.id.menuDT_nv) {
-                    frg_danhthu frgDT = new frg_danhthu();
+                    frg_doanhthu frgDT = new frg_doanhthu();
                     relaceFrg(frgDT);
                     toolbar_nv.setTitle("Doanh thu");
                 }

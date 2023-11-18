@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Dbhelper extends SQLiteOpenHelper {
     public Dbhelper(Context context) {
-        super(context, "shop", null, 4);
+        super(context, "shop", null, 5);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class Dbhelper extends SQLiteOpenHelper {
         // Tạo bảng loại hàng
         String tb_LoaiHang = "create table LoaiHang(" +
                 "MaLoai integer primary key autoincrement," +
-                "HoTen text not null)";
+                "TenLoai text not null)";
         db.execSQL(tb_LoaiHang);
 
         // Tạo bảng sản phẩm

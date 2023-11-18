@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="15dp"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="7dp"
+        android:background="@drawable/khung">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_margin="3dp"
+                android:src="@drawable/logo" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="10"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvMaSP"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="MaSP"
+                    android:textColor="@color/black"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvTenSP"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TenSP"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvSL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="SL"
+                    android:textColor="@color/black"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvGia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Giá"
+                    android:textColor="@color/black"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvLoaiSP"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Loại H"
+                    android:textColor="@color/black"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imgDeleteSP"
+                android:layout_width="0dp"
+                android:layout_height="85dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_delete" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
