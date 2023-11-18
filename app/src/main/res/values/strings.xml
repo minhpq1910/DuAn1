@@ -6,4 +6,6 @@
     <string name="close">Close nav</string>
     <string name="open_nv">Open nav</string>
     <string name="close_nv">Close nav</string>
+    <string name="trangthai_datra"><u>Đã thanh toán</u></string>
+    <string name="trangthai_chuatra"><u>Chưa thanh toán</u></string>
 </resources>
