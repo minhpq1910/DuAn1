@@ -1,23 +1,15 @@
 package com.example.duan1.model;
 
 public class admin {
-    private String ma, taiKhoan, matKhau;
+    private String taiKhoan, hoTen, matKhau;
 
     public admin() {
     }
 
-    public admin(String ma, String taiKhoan, String matKhau) {
-        this.ma = ma;
+    public admin(String taiKhoan, String hoTen, String matKhau) {
         this.taiKhoan = taiKhoan;
+        this.hoTen = hoTen;
         this.matKhau = matKhau;
-    }
-
-    public String getMa() {
-        return ma;
-    }
-
-    public void setMa(String ma) {
-        this.ma = ma;
     }
 
     public String getTaiKhoan() {
@@ -26,6 +18,14 @@ public class admin {
 
     public void setTaiKhoan(String taiKhoan) {
         this.taiKhoan = taiKhoan;
+    }
+
+    public String getHoTen() {
+        return hoTen;
+    }
+
+    public void setHoTen(String hoTen) {
+        this.hoTen = hoTen;
     }
 
     public String getMatKhau() {

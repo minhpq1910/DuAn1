@@ -26,7 +26,7 @@ public class sanPhamDao {
         values.put("SL", obj.getSL());
         values.put("Gia", obj.getGia());
         values.put("MaLoai", obj.getMaLoaiH());
-
+        values.put("Avt", obj.getUrlAvt());
         return db.insert("SanPham", null, values);
     }
 
@@ -36,6 +36,7 @@ public class sanPhamDao {
         values.put("SL", obj.getSL());
         values.put("Gia", obj.getGia());
         values.put("MaLoai", obj.getMaLoaiH());
+        values.put("Avt", obj.getUrlAvt());
         return db.update("SanPham", values, "MaSP = ?", new String[]{String.valueOf(obj.getMaSP())});
     }
 
@@ -65,6 +66,7 @@ public class sanPhamDao {
             obj.setSL(Integer.parseInt(cursor.getString(cursor.getColumnIndex("SL"))));
             obj.setGia(Integer.parseInt(cursor.getString(cursor.getColumnIndex("Gia"))));
             obj.setMaLoaiH(Integer.parseInt(cursor.getString(cursor.getColumnIndex("MaLoai"))));
+            obj.setUrlAvt(cursor.getString(cursor.getColumnIndex("Avt")));
             list.add(obj);
         }
         return list;

@@ -16,6 +16,7 @@ import com.example.duan1.dao.loaiHangDao;
 import com.example.duan1.fragment.frg_sanpham;
 import com.example.duan1.model.loaihang;
 import com.example.duan1.model.sanpham;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -23,8 +24,8 @@ public class sanPhamAdapter extends ArrayAdapter<sanpham> {
     private Context context;
     frg_sanpham fragment;
     List<sanpham> list;
-
-    TextView tvMaSP, tvTenSP, tvSL,tvGia, tvLoaiSP;
+    ImageView AvtSP;
+    TextView tvMaSP, tvTenSP, tvSL, tvGia, tvLoaiSP;
     ImageView imgDel;
 
     public sanPhamAdapter(@NonNull Context context, frg_sanpham fragment, List<sanpham> list) {
@@ -55,9 +56,10 @@ public class sanPhamAdapter extends ArrayAdapter<sanpham> {
             tvSL.setText("Số lượng: " + item.getSL());
             tvGia = v.findViewById(R.id.tvGia);
             tvGia.setText("Giá: " + item.getGia());
-
             tvLoaiSP = v.findViewById(R.id.tvLoaiSP);
-            tvLoaiSP.setText("Loại hàng: "+ loaihang.getTenLoaiH());
+            tvLoaiSP.setText("Loại hàng: " + loaihang.getTenLoaiH());
+            AvtSP = v.findViewById(R.id.AvtSP);
+            Picasso.get().load(item.getUrlAvt()).into(AvtSP);
 
             imgDel = v.findViewById(R.id.imgDeleteSP);
         }

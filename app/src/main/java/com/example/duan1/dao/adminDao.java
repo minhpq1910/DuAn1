@@ -1,26 +1,86 @@
 package com.example.duan1.dao;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.duan1.database.Dbhelper;
+import com.example.duan1.model.admin;
+import com.example.duan1.model.nhanVien;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class adminDao {
-    Dbhelper dbhelper;
-    public adminDao(Context context){
-        dbhelper = new Dbhelper(context);
+    private SQLiteDatabase db;
+
+    public adminDao(Context context) {
+        Dbhelper dbHelper = new Dbhelper(context);
+        db = dbHelper.getWritableDatabase();
     }
 
-    // đăng nhập
-    public boolean checkLogin(String ma,String MatKhau){
-        SQLiteDatabase db = dbhelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select * from admin where ma = ? and MatKhau = ?",new String[]{ma, MatKhau});
-        if(cursor.getCount() != 0){
-            return true;
-        }else{
-            return false;
+    public long insert(admin obj) {
+        ContentValues values = new ContentValues();
+        values.put("taiKhoan", obj.getTaiKhoan());
+        values.put("hoTen", obj.getHoTen());
+        values.put("MatKhau", obj.getMatKhau());
+        return db.insert("admin", null, values);
+    }
+
+    public long update(admin obj) {
+        ContentValues values = new ContentValues();
+        values.put("taiKhoan", obj.getTaiKhoan());
+        values.put("hoTen", obj.getHoTen());
+        values.put("MatKhau", obj.getMatKhau());
+        return db.update("admin", values, "taiKhoan = ?", new String[]{String.valueOf(obj.getTaiKhoan())});
+    }
+
+//    public long updatePass(nhanVien obj) {
+//        ContentValues values = new ContentValues();
+//        values.put("HoTen", obj.getHoTen());
+//        values.put("MatKhau", obj.getMatKhau());
+//        return db.update("NhanVien", values, "MaNV = ?", new String[]{String.valueOf(obj.getMaNV())});
+//    }
+
+//    public long delete(String id) {
+//        return db.delete("NhanVien", "MaNV = ?", new String[]{String.valueOf(id)});
+//    }
+
+//    public List<nhanVien> getAll() {
+//        String sql = "SELECT * FROM NhanVien";
+//        return getData(sql);
+//    }
+//
+//    public admin getID(String id) {
+//        String sql = "SELECT * FROM NhanVien WHERE MaNV=?";
+//        List<nhanVien> list = getData(sql, id);
+//        return list.get(0);
+//    }
+
+    // check login
+    public int checkLogin(String id, String password) {
+        String sql = "SELECT * FROM admin WHERE taiKhoan =? AND MatKhau=?";
+        List<admin> list = getData(sql, id, password);
+        if (list.size() == 0) {
+            return -1;
         }
+        return 1;
+    }
+
+    @SuppressLint("Range")
+    private List<admin> getData(String sql, String... selectionArgs) {
+        List<admin> list = new ArrayList<>();
+        Cursor cursor = db.rawQuery(sql, selectionArgs);
+        while (cursor.moveToNext()) {
+            admin obj = new admin();
+            obj.setTaiKhoan(cursor.getString(cursor.getColumnIndex("taiKhoan")));
+            obj.setTaiKhoan(cursor.getString(cursor.getColumnIndex("hoTen")));
+            obj.setMatKhau(cursor.getString(cursor.getColumnIndex("MatKhau")));
+            list.add(obj);
+        }
+        return list;
     }
 }
+

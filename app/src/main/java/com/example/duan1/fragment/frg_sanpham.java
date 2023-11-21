@@ -6,14 +6,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -31,10 +28,10 @@ import com.example.duan1.dao.sanPhamDao;
 import com.example.duan1.model.loaihang;
 import com.example.duan1.model.sanpham;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class frg_sanpham extends Fragment {
@@ -47,7 +44,7 @@ public class frg_sanpham extends Fragment {
 
     FloatingActionButton fab;
     Dialog dialog;
-    EditText edMaSP, edTenSP, edSL, edGia;
+    EditText edMaSP, edTenSP, edSL, edGia, edAvt;
     Spinner spinner;
     Button btnSave, btnCancel;
 
@@ -125,12 +122,13 @@ public class frg_sanpham extends Fragment {
 
     protected void openDialog(final Context context, final int type) {
         dialog = new Dialog(context);
-        dialog.setContentView(R.layout.dialog_sanphan);
+        dialog.setContentView(R.layout.dialog_sanpham);
         edMaSP = dialog.findViewById(R.id.edMaSP);
         edTenSP = dialog.findViewById(R.id.edTenSP);
         edSL = dialog.findViewById(R.id.edSL);
         spinner = dialog.findViewById(R.id.spLoaiH);
         edGia = dialog.findViewById(R.id.edGia);
+        edAvt = dialog.findViewById(R.id.edAvt);
         btnCancel = dialog.findViewById(R.id.btnCancelSP);
         btnSave = dialog.findViewById(R.id.btnSaveSP);
 
@@ -145,7 +143,6 @@ public class frg_sanpham extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 maLoaiH = listLoaiH.get(position).getMaLoaiH();
-//                Toast.makeText(context, "Chọn "+listLoaiSach.get(position).getTenLoai(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -160,6 +157,7 @@ public class frg_sanpham extends Fragment {
             edTenSP.setText(item.getTenSP());
             edSL.setText(String.valueOf(item.getSL()));
             edGia.setText(String.valueOf(item.getGia()));
+            edAvt.setText(item.getUrlAvt());
             for (int i = 0; i < listLoaiH.size(); i++)
                 if (item.getMaLoaiH() == (listLoaiH.get(i).getMaLoaiH())) {
                     position = i;
@@ -181,6 +179,8 @@ public class frg_sanpham extends Fragment {
                 item.setSL(parseInt(edSL.getText().toString(), 0));
                 item.setMaLoaiH(maLoaiH);
                 item.setGia(parseInt(edGia.getText().toString(), 0));
+                item.setUrlAvt(edAvt.getText().toString());
+
                 if (validate() > 0) {
                     if (type == 0) {
                         if (dao.insert(item) > 0) {
@@ -199,7 +199,6 @@ public class frg_sanpham extends Fragment {
                     capNhatLv();
                     dialog.dismiss();
                 }
-
             }
         });
         dialog.show();
@@ -207,7 +206,7 @@ public class frg_sanpham extends Fragment {
 
     public int validate() {
         int check = 1;
-        if (edTenSP.getText().length() == 0 || edSL.getText().length() == 0 || edGia.getText().length() == 0) {
+        if (edTenSP.getText().length() == 0 || edSL.getText().length() == 0 || edGia.getText().length() == 0 || edAvt.getText().length() == 0) {
             Toast.makeText(getContext(), "Bạn phải nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
             check = -1;
         }
@@ -222,53 +221,4 @@ public class frg_sanpham extends Fragment {
         }
     }
 
-
-    private void handleSearch(String query) {
-        List<sanpham> listSearch = new ArrayList<>();
-        for (sanpham sp : list) {
-            if (sp.getTenSP().toLowerCase().contains(query.toLowerCase())) {
-                listSearch.add(sp);
-            }
-        }
-        adapter = new sanPhamAdapter(getActivity(), this, listSearch);
-        lvSP.setAdapter(adapter);
-
-    }
-
-    // Sắp xếp sách theo tên tăng dần
-//    private void sortBooksByNameAscending() {
-//        Collections.sort(list, new Comparator<sanpham>() {
-//            @Override
-//            public int compare(Sach sach1, Sach sach2) {
-//                return sach1.getTenSach().compareTo(sach2.getTenSach());
-////                return sach1.getGiaThue() - sach2.getGiaThue();
-//            }
-//        });
-//        adapter.notifyDataSetChanged();
-//    }
-
-    // Sắp xếp sách theo tên giảm dần
-//    private void sortBooksByNameDescending() {
-//        Collections.sort(list, new Comparator<Sach>() {
-//            @Override
-//            public int compare(Sach sach1, Sach sach2) {
-//                return sach2.getTenSach().compareTo(sach1.getTenSach());
-////                return sach2.getGiaThue() - sach1.getGiaThue();
-//            }
-//        });
-//        adapter.notifyDataSetChanged();
-//    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        int id = item.getItemId();
-//        if (id == R.id.asc){
-//            sortBooksByNameAscending();
-//            return true;
-//        }else if(id == R.id.desc){
-//            sortBooksByNameDescending();
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 }

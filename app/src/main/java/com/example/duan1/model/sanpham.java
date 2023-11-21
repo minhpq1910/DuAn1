@@ -4,16 +4,17 @@ public class sanpham {
     private int MaSP;
     private String TenSP;
     private int SL, Gia, MaLoaiH;
-
+    private String urlAvt;
     public sanpham() {
     }
 
-    public sanpham(int maSP, String tenSP, int SL, int gia, int maLoaiH) {
+    public sanpham(int maSP, String tenSP, int SL, int gia, int maLoaiH, String urlAvt) {
         MaSP = maSP;
         TenSP = tenSP;
         this.SL = SL;
         Gia = gia;
         MaLoaiH = maLoaiH;
+        this.urlAvt = urlAvt;
     }
 
     public int getMaSP() {
@@ -54,5 +55,13 @@ public class sanpham {
 
     public void setMaLoaiH(int maLoaiH) {
         MaLoaiH = maLoaiH;
+    }
+
+    public String getUrlAvt() {
+        return urlAvt;
+    }
+
+    public void setUrlAvt(String urlAvt) {
+        this.urlAvt = urlAvt;
     }
 }
