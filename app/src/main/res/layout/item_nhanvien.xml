@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+<<<<<<< HEAD
     android:layout_height="match_parent"
     android:layout_margin="15dp"
     android:orientation="horizontal">
+=======
+    android:orientation="horizontal"
+    android:layout_margin="15dp"
+    android:layout_height="match_parent">
+>>>>>>> origin/master
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="7dp"
+<<<<<<< HEAD
         android:background="@drawable/khung">
 
         <LinearLayout
@@ -66,6 +73,67 @@
                 android:layout_weight="1"
                 android:src="@drawable/ic_delete" />
         </LinearLayout>
+=======
+        android:background="@drawable/khung"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_person"
+                android:layout_marginLeft="3dp"
+                android:layout_gravity="center"/>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:layout_weight="10">
+        <TextView
+            android:id="@+id/tvMaNV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="14dp"
+            android:text="MaNV"/>
+        <TextView
+            android:id="@+id/tvTenNV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:text="TenNV"/>
+        <TextView
+            android:id="@+id/tvSDT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:text="SDT"/>
+        <TextView
+            android:id="@+id/tvLuong"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:text="Lương"/>
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/imgDeleteLS"
+        android:layout_width="0dp"
+        android:layout_height="65dp"
+        android:layout_weight="1"
+        android:src="@drawable/ic_delete"/>
+    </LinearLayout>
+>>>>>>> origin/master
     </LinearLayout>
 
 </LinearLayout>

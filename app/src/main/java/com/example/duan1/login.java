@@ -20,8 +20,8 @@ public class login extends AppCompatActivity {
     TextInputLayout in_user, in_pass;
     Button btnLogin, btnCancel;
     CheckBox chkSave;
-    nhanVienDao nvDao;
-    adminDao aDao;
+    nhanVienDao nvDao = new nhanVienDao(this);
+    adminDao aDao = new adminDao(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +34,6 @@ public class login extends AppCompatActivity {
         btnLogin = findViewById(R.id.btn_LogIn);
         btnCancel = findViewById(R.id.btn_Cancel);
         chkSave = findViewById(R.id.chkSave);
-
-        nvDao = new nhanVienDao(this);
-        aDao = new adminDao(this);
 
         SharedPreferences pref = getSharedPreferences("User_File", MODE_PRIVATE);
         ed_txtuser.setText(pref.getString("Username", ""));
@@ -67,14 +64,14 @@ public class login extends AppCompatActivity {
                 in_pass.setError(null);
             }
         } else {
-            if (nvDao.checkLogin(user, pass) > 0) {
+            if (nvDao.checkLogin(user, pass)) {
                 Toast.makeText(this, "Login thành công", Toast.LENGTH_SHORT).show();
                 rememberUser(user, pass, chkSave.isChecked());
                 Intent i = new Intent(login.this, screen_nhanvien.class);
                 i.putExtra("MaNV", user);
                 startActivity(i);
                 finish();
-            } else if (aDao.checkLogin(user, pass) > 0) {
+            } else if (aDao.checkLogin(user, pass)) {
                 Toast.makeText(this, "Login thành công", Toast.LENGTH_SHORT).show();
                 rememberUser(user, pass, chkSave.isChecked());
                 Intent i = new Intent(login.this, MainActivity.class);

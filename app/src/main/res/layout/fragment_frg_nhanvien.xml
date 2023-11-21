@@ -7,7 +7,7 @@
     tools:context=".fragment.frg_nhanvien">
 
     <ListView
-        android:id="@+id/lvNhanVien"
+        android:id="@+id/lvNV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
