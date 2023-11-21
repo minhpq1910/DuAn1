@@ -11,7 +11,7 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.example.duan1.dao.adminDao;
-import com.example.duan1.dao.nhanVienDao;
+import com.example.duan1.dao.nhanVienDAO;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -20,7 +20,7 @@ public class login extends AppCompatActivity {
     TextInputLayout in_user, in_pass;
     Button btnLogin, btnCancel;
     CheckBox chkSave;
-    nhanVienDao nvDao = new nhanVienDao(this);
+    nhanVienDAO nvDao = new nhanVienDAO(this);
     adminDao aDao = new adminDao(this);
 
     @Override
