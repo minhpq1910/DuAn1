@@ -1,83 +1,84 @@
 package com.example.duan1.dao;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.duan1.database.Dbhelper;
+import com.example.duan1.model.admin;
 import com.example.duan1.model.nhanVien;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class nhanVienDao {
-    Dbhelper dbhelper;
-    public nhanVienDao(Context context){
-    dbhelper = new Dbhelper(context);
+    private SQLiteDatabase db;
+
+    public nhanVienDao(Context context) {
+        Dbhelper dbHelper = new Dbhelper(context);
+        db = dbHelper.getWritableDatabase();
     }
-    public ArrayList<nhanVien> getDSThuThu(){
-        ArrayList<nhanVien> list = new ArrayList<>();
-        SQLiteDatabase db = dbhelper.getReadableDatabase();
-        try{
-            Cursor cursor = db.rawQuery("select * from NhanVien",null);
-            if(cursor.getCount() > 0){
-                cursor.moveToFirst();
-                while (cursor.isAfterLast()){
-                    nhanVien nv = new nhanVien();
-                    nv.setMaNV(cursor.getString(0));
-                    nv.setHoTen(cursor.getString(1));
-                    nv.setMatKhau(cursor.getString(2));
-                    list.add(nv);
-                    cursor.moveToNext();
-                }
-            }
-        }catch (Exception e){
-            e.printStackTrace();
+
+    public long insert(nhanVien obj) {
+        ContentValues values = new ContentValues();
+        values.put("MaNV", obj.getMaNV());
+        values.put("HoTen", obj.getHoTen());
+        values.put("MatKhau", obj.getMatKhau());
+        return db.insert("NhanVien", null, values);
+    }
+
+    public long update(nhanVien obj) {
+        ContentValues values = new ContentValues();
+        values.put("HoTen", obj.getHoTen());
+        values.put("MatKhau", obj.getMatKhau());
+        return db.update("NhanVien", values, "MaNV = ?", new String[]{String.valueOf(obj.getMaNV())});
+    }
+
+//    public long updatePass(nhanVien obj) {
+//        ContentValues values = new ContentValues();
+//        values.put("HoTen", obj.getHoTen());
+//        values.put("MatKhau", obj.getMatKhau());
+//        return db.update("NhanVien", values, "MaNV = ?", new String[]{String.valueOf(obj.getMaNV())});
+//    }
+
+    public long delete(String id) {
+        return db.delete("NhanVien", "MaNV = ?", new String[]{String.valueOf(id)});
+    }
+
+    public List<nhanVien> getAll() {
+        String sql = "SELECT * FROM NhanVien";
+        return getData(sql);
+    }
+
+    public nhanVien getID(String id) {
+        String sql = "SELECT * FROM NhanVien WHERE MaNV=?";
+        List<nhanVien> list = getData(sql, id);
+        return list.get(0);
+    }
+
+    // check login
+    public int checkLogin(String id, String password) {
+        String sql = "SELECT * FROM NhanVien WHERE MaNV =? AND MatKhau =?";
+        List<nhanVien> list = getData(sql, id, password);
+        if (list.size() == 0) {
+            return -1;
+        }
+        return 1;
+    }
+
+    @SuppressLint("Range")
+    private List<nhanVien> getData(String sql, String... selectionArgs) {
+        List<nhanVien> list = new ArrayList<>();
+        Cursor cursor = db.rawQuery(sql, selectionArgs);
+        while (cursor.moveToNext()) {
+            nhanVien obj = new nhanVien();
+            obj.setMaNV(cursor.getString(cursor.getColumnIndex("MaNV")));
+            obj.setHoTen(cursor.getString(cursor.getColumnIndex("HoTen")));
+            obj.setMatKhau(cursor.getString(cursor.getColumnIndex("MatKhau")));
+            list.add(obj);
         }
         return list;
-    }
-
-    public boolean checkUser(String username){
-        SQLiteDatabase db = dbhelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select * from NhanVien where MaNV = ?",new String[]{username});
-        int row = cursor.getCount();
-        return (row > 0);
-    }
-
-    public boolean insert(nhanVien nv){
-        SQLiteDatabase db = dbhelper.getReadableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("MaNV",nv.getMaNV());
-        values.put("HoTen",nv.getHoTen());
-        values.put("MatKhau",nv.getMatKhau());
-        long data = db.insert("NhanVien",null,values);
-        return (data > 0);
-    }
-
-    // đăng nhập
-    public boolean checkLogin(String MaNV,String MatKhau){
-        SQLiteDatabase db = dbhelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select * from NhanVien where MaNV = ? and MatKhau = ?",new String[]{MaNV, MatKhau});
-        if(cursor.getCount() != 0){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    public boolean updateMK(String username, String oldPass, String newPass){
-        SQLiteDatabase db = dbhelper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select * from NhanVien where MaNV = ? and MatKhau = ?", new String[]{username,oldPass});
-        if (cursor.getCount() > 0){
-            ContentValues values = new ContentValues();
-            values.put("MatKhau", newPass);
-            long check = db.update("NhanVien",values,"MaNV = ?",new String[]{username});
-            if(check == -1){
-                return false;
-            }else {
-                return true;
-            }
-        }
-        return false;
     }
 }

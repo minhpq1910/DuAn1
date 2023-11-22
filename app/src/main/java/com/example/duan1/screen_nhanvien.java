@@ -51,12 +51,11 @@ public class screen_nhanvien extends AppCompatActivity {
         navigationView_nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                if (item.getItemId() == R.id.menuQLHD_nv) {
-//                    frg_hoadon frgHd = new frg_hoadon();
-//                    relaceFrg(frgHd);
-//                    toolbar_nv.setTitle("Quản lý hoá đơn");
-//                } else
-                    if (item.getItemId() == R.id.menuQLLH_nv) {
+                if (item.getItemId() == R.id.menuQLHD_nv) {
+                    frg_hoadon frgHd = new frg_hoadon();
+                    relaceFrg(frgHd);
+                    toolbar_nv.setTitle("Quản lý hoá đơn");
+                } else if (item.getItemId() == R.id.menuQLLH_nv) {
                     frg_loaihang frgLH = new frg_loaihang();
                     relaceFrg(frgLH);
                     toolbar_nv.setTitle("Quản lý loại hàng");
@@ -93,9 +92,9 @@ public class screen_nhanvien extends AppCompatActivity {
             }
         });
         // Mở quản lý hoá đơn lên trước
-//        frg_hoadon frgHd = new frg_hoadon();
-//        relaceFrg(frgHd);
-//        toolbar_nv.setTitle("Quản lý hoá đơn");
+        frg_hoadon frgHd = new frg_hoadon();
+        relaceFrg(frgHd);
+        toolbar_nv.setTitle("Quản lý hoá đơn");
     }
 
     public void NavigationUser() {

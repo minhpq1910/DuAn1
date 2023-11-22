@@ -57,7 +57,7 @@ public class hoaDonAdapter extends ArrayAdapter<hoadon> {
             tv_SP = v.findViewById(R.id.tv_SP);
             tv_SP.setText("Tên sản phẩm: " + sp.getTenSP());
             nvDao = new nhanVienDao(context);
-            nhanVien nv = nvDao.getID(String.valueOf(item.getMaNV()));
+            nhanVien nv = nvDao.getID(item.getMaNV());
             tv_nhanV = v.findViewById(R.id.tv_nhanV);
             tv_nhanV.setText("Nhân viên: " + nv.getHoTen());
             tv_SL = v.findViewById(R.id.tv_SL);

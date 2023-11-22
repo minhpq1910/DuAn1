@@ -1,51 +1,38 @@
 package com.example.duan1.model;
 
 public class nhanVien {
-    private int maNV;
-    private String hoTen;
-    private int SDT;
-
-    private int Luong;
+    private String MaNV, HoTen, MatKhau;
 
     public nhanVien() {
     }
 
-    public nhanVien(int maNV, String hoTen, int SDT, int luong) {
-        this.maNV = maNV;
-        this.hoTen = hoTen;
-        this.SDT = SDT;
-        Luong = luong;
+    public nhanVien(String maNV, String hoTen, String matKhau) {
+        MaNV = maNV;
+        HoTen = hoTen;
+        MatKhau = matKhau;
     }
 
-    public int getMaNV() {
-        return maNV;
+    public String getMaNV() {
+        return MaNV;
     }
 
-    public void setMaNV(int maNV) {
-        this.maNV = maNV;
+    public void setMaNV(String maNV) {
+        MaNV = maNV;
     }
 
     public String getHoTen() {
-        return hoTen;
+        return HoTen;
     }
 
     public void setHoTen(String hoTen) {
-        this.hoTen = hoTen;
+        HoTen = hoTen;
     }
 
-    public int getSDT() {
-        return SDT;
+    public String getMatKhau() {
+        return MatKhau;
     }
 
-    public void setSDT(int SDT) {
-        this.SDT = SDT;
-    }
-
-    public int getLuong() {
-        return Luong;
-    }
-
-    public void setLuong(int luong) {
-        Luong = luong;
+    public void setMatKhau(String matKhau) {
+        MatKhau = matKhau;
     }
 }

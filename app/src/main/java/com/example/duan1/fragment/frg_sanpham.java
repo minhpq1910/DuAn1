@@ -28,8 +28,6 @@ import com.example.duan1.dao.sanPhamDao;
 import com.example.duan1.model.loaihang;
 import com.example.duan1.model.sanpham;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +53,7 @@ public class frg_sanpham extends Fragment {
     int maLoaiH, position;
 
     private SearchView searchView;
+
     public frg_sanpham() {
         // Required empty public constructor
     }

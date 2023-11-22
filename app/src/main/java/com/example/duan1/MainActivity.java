@@ -23,6 +23,7 @@ import com.example.duan1.fragment.frg_changePass;
 import com.example.duan1.fragment.frg_doanhthu;
 import com.example.duan1.fragment.frg_hoadon;
 import com.example.duan1.fragment.frg_loaihang;
+import com.example.duan1.fragment.frg_nhanvien;
 import com.example.duan1.fragment.frg_sanpham;
 import com.google.android.material.navigation.NavigationView;
 
