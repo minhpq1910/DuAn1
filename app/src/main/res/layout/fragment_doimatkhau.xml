@@ -1,91 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="12dp"
-    tools:context=".fragment.frg_doimatkhau">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_margin="15dp"
+    tools:context=".fragment.frg_addNv">
 
-    <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
-        android:gravity="center|top"
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/key"/>
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Đổi Mật Khẩu"
-            android:textColor="@color/blue_A400"
-            android:textSize="35dp"
-            android:textStyle="bold"
-            android:gravity="center">
+        android:layout_height="wrap_content"
+        app:passwordToggleEnabled="true"
+        android:layout_marginBottom="20dp">
 
-        </TextView>
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edPassOld"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:id="@+id/edt_oldpassword"
-            android:layout_marginTop="60dp"
-            android:padding="12dp"
-            android:hint="Mật khẩu cũ . . ."
+            android:maxLines="1"
+            android:hint="Mật khẩu cũ"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:passwordToggleEnabled="true"
+        android:layout_marginBottom="20dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edPassChange"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/cus_bgr_edt"/>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray_d9d"/>
-        <EditText
             android:inputType="textPassword"
-            android:id="@+id/edt_newpassword"
-            android:layout_marginTop="24dp"
-            android:padding="12dp"
-            android:hint="Mật khẩu mới . . ."
+            android:maxLines="1"
+            android:hint="Mật khẩu mới"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:passwordToggleEnabled="true"
+        android:layout_marginBottom="20dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edRePassChange"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/cus_bgr_edt"/>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray_d9d"/>
-        <EditText
             android:inputType="textPassword"
-            android:id="@+id/edt_enterthepassword"
-            android:layout_marginTop="24dp"
-            android:padding="12dp"
-            android:hint="Nhập lại mật khẩu . . ."
-            android:layout_width="match_parent"
+            android:maxLines="1"
+            android:hint="Nhập lại mật khẩu"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btnSaveUserChange"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/cus_bgr_edt"/>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray_d9d"/>
-        <LinearLayout
-            android:layout_marginTop="100dp"
-            android:layout_width="match_parent"
+            android:text="Lưu"
+            android:textSize="20dp"
+            android:layout_weight="1"
+            android:backgroundTint="#4CAF50" />
+        <Button
+            android:id="@+id/btnCancelUserChange"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/btn_cancel"
-                android:textStyle="bold"
-                android:layout_marginRight="3dp"
-                android:background="@color/gray_d9d"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="HỦY"/>
-            <Button
-                android:id="@+id/btn_save"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:layout_marginLeft="3dp"
-                android:background="@color/blue_A400"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Lưu"/>
-        </LinearLayout>
+            android:text="Hủy"
+            android:layout_weight="1"
+            android:backgroundTint="#F44336"
+            android:textSize="20dp"
+            android:layout_marginLeft="50dp"/>
+
     </LinearLayout>
-
-</FrameLayout>
+</LinearLayout>

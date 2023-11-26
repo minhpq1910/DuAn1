@@ -18,8 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.duan1.fragment.frg_changePass;
 import com.example.duan1.fragment.frg_doanhthu;
+import com.example.duan1.fragment.frg_doimatkhau;
 import com.example.duan1.fragment.frg_hoadon;
 import com.example.duan1.fragment.frg_loaihang;
 import com.example.duan1.fragment.frg_sanpham;
@@ -64,8 +64,8 @@ public class screen_nhanvien extends AppCompatActivity {
                     relaceFrg(frgSP);
                     toolbar_nv.setTitle("Quản lý sản phẩm");
                 } else if (item.getItemId() == R.id.menuDMK_nv) {
-                    frg_changePass frgCP = new frg_changePass();
-                    relaceFrg(frgCP);
+                    frg_doimatkhau frgDMK = new frg_doimatkhau();
+                    relaceFrg(frgDMK);
                     toolbar_nv.setTitle("Đổi mật khẩu");
                 } else if (item.getItemId() == R.id.menuDX_nv) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);

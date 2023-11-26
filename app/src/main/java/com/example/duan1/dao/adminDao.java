@@ -37,27 +37,27 @@ public class adminDao {
         return db.update("admin", values, "taiKhoan = ?", new String[]{String.valueOf(obj.getTaiKhoan())});
     }
 
-//    public long updatePass(nhanVien obj) {
-//        ContentValues values = new ContentValues();
-//        values.put("HoTen", obj.getHoTen());
-//        values.put("MatKhau", obj.getMatKhau());
-//        return db.update("NhanVien", values, "MaNV = ?", new String[]{String.valueOf(obj.getMaNV())});
-//    }
+    public long updatePass(admin obj) {
+        ContentValues values = new ContentValues();
+        values.put("HoTen", obj.getHoTen());
+        values.put("MatKhau", obj.getMatKhau());
+        return db.update("NhanVien", values, "MaNV = ?", new String[]{String.valueOf(obj.getTaiKhoan())});
+    }
 
-//    public long delete(String id) {
-//        return db.delete("NhanVien", "MaNV = ?", new String[]{String.valueOf(id)});
-//    }
+    public long delete(String id) {
+        return db.delete("NhanVien", "MaNV = ?", new String[]{String.valueOf(id)});
+    }
 
-//    public List<nhanVien> getAll() {
-//        String sql = "SELECT * FROM NhanVien";
-//        return getData(sql);
-//    }
-//
-//    public admin getID(String id) {
-//        String sql = "SELECT * FROM NhanVien WHERE MaNV=?";
-//        List<nhanVien> list = getData(sql, id);
-//        return list.get(0);
-//    }
+    public List<admin> getAll() {
+        String sql = "SELECT * FROM NhanVien";
+        return getData(sql);
+    }
+
+    public admin getID(String id) {
+        String sql = "SELECT * FROM NhanVien WHERE MaNV=?";
+        List<admin> list = getData(sql, id);
+        return list.get(0);
+    }
 
     // check login
     public int checkLogin(String id, String password) {

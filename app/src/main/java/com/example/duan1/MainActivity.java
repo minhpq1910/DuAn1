@@ -19,8 +19,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.duan1.fragment.frg_addNv;
-import com.example.duan1.fragment.frg_changePass;
 import com.example.duan1.fragment.frg_doanhthu;
+import com.example.duan1.fragment.frg_doimatkhau;
 import com.example.duan1.fragment.frg_hoadon;
 import com.example.duan1.fragment.frg_loaihang;
 import com.example.duan1.fragment.frg_nhanvien;
@@ -73,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
                     relaceFrg(frgTNV);
                     toolbar.setTitle("Thêm nhân viên");
                 } else if (item.getItemId() == R.id.menuDMK) {
-                    frg_changePass frgCP = new frg_changePass();
-                    relaceFrg(frgCP);
+                    frg_doimatkhau frgDMK = new frg_doimatkhau();
+                    relaceFrg(frgDMK);
                     toolbar.setTitle("Đổi mật khẩu");
                 } else if (item.getItemId() == R.id.menuDX) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
