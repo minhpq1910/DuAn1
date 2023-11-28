@@ -33,8 +33,9 @@ public class frg_nhanvien extends Fragment {
     nhanVien item;
     FloatingActionButton fab;
     Dialog dialog;
-    EditText edMaNV, edTenNV, edMK_NV;
+    EditText edMaNV, edTenNV, edMK_NV, edtNhapLaiMKMK_NV, edUrlNV;
     Button btnSave, btnCancel;
+
 
     public frg_nhanvien() {
         // Required empty public constructor
@@ -108,14 +109,18 @@ public class frg_nhanvien extends Fragment {
         edMaNV = dialog.findViewById(R.id.edMaNV);
         edTenNV = dialog.findViewById(R.id.edTenNV);
         edMK_NV = dialog.findViewById(R.id.edMK_NV);
+        edtNhapLaiMKMK_NV = dialog.findViewById(R.id.edtNhapLaiMKMK_NV);
+        edUrlNV = dialog.findViewById(R.id.edUrlNV);
         btnCancel = dialog.findViewById(R.id.btnCancelTV);
         btnSave = dialog.findViewById(R.id.btnSaveTV);
 
-        edMaNV.setEnabled(false);
+
         if (type != 0) {
-            edMaNV.setText(String.valueOf(item.getMaNV()));
+            edMaNV.setText(String.valueOf(item.getTaiKhoan()));
             edTenNV.setText(item.getHoTen());
             edMK_NV.setText(item.getMatKhau());
+            edtNhapLaiMKMK_NV.setText(item.getMatKhau());
+            edUrlNV.setText(item.getAvt());
         }
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,15 +134,21 @@ public class frg_nhanvien extends Fragment {
                 item = new nhanVien();
                 item.setHoTen(edTenNV.getText().toString());
                 item.setMatKhau(edMK_NV.getText().toString());
+                item.setAvt(edUrlNV.getText().toString());
                 if (validate() > 0) {
                     if (type == 0) {
                         if (dao.insert(item) > 0) {
                             Toast.makeText(context, "Thêm thành công", Toast.LENGTH_SHORT).show();
+//                            edMaNV.setText("");
+//                            edTenNV.setText("");
+//                            edMK_NV.setText("");
+//                            edtNhapLaiMKMK_NV.setText("");
+//                            edUrlNV.setText("");
                         } else {
                             Toast.makeText(context, "Thêm thất bại", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        item.setMaNV(edMaNV.getText().toString());
+                        item.setTaiKhoan(edMaNV.getText().toString());
                         if (dao.update(item) > 0) {
                             Toast.makeText(context, "Sửa thành công", Toast.LENGTH_SHORT).show();
                         } else {
@@ -154,13 +165,17 @@ public class frg_nhanvien extends Fragment {
 
     public int validate() {
         int check = 1;
-        if (edTenNV.getText().length() == 0 ||  edMK_NV.getText().length() == 0) {
+        if (edMaNV.getText().length() == 0 || edTenNV.getText().length() == 0 || edMK_NV.getText().length() == 0 || edtNhapLaiMKMK_NV.getText().length() == 0 || edUrlNV.getText().length() == 0) {
             Toast.makeText(getContext(), "Bạn phải nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
             check = -1;
-
+        } else {
+            String pass = edMK_NV.getText().toString();
+            String repass = edtNhapLaiMKMK_NV.getText().toString();
+            if (!pass.equals(repass)) {
+                Toast.makeText(getActivity(), "Mật khẩu không khớp", Toast.LENGTH_SHORT).show();
+                check = -1;
+            }
         }
         return check;
-
     }
-
 }

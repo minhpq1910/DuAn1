@@ -36,7 +36,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="MaSP"
-                    android:textColor="@color/black"
+                    android:textColor="@color/gray_4d0"
                     android:textSize="14dp"
                     android:textStyle="bold" />
 
@@ -79,7 +79,7 @@
 
             <ImageView
                 android:id="@+id/imgDeleteSP"
-                android:layout_width="0dp"
+                android:layout_width="10dp"
                 android:layout_height="85dp"
                 android:layout_weight="1"
                 android:src="@drawable/ic_delete" />

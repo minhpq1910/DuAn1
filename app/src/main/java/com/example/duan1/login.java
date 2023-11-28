@@ -66,18 +66,22 @@ public class login extends AppCompatActivity {
                 in_pass.setError(null);
             }
         } else {
-            if (nvDao.checkLogin(user, pass) > 0) {
-                Toast.makeText(this, "Login thành công", Toast.LENGTH_SHORT).show();
-                rememberUser(user, pass, chkSave.isChecked());
+            int nvLoginResult = nvDao.checkLogin(user, pass);
+            int adminLoginResult = aDao.checkLogin(user, pass);
+            if (nvLoginResult == 1) {
+                Toast.makeText(this, "Login thành công vào tài khoản nhân viên", Toast.LENGTH_SHORT).show();
+                rememberUser(user, pass, chkSave.isChecked(), "nhanvien");
                 Intent i = new Intent(login.this, screen_nhanvien.class);
                 i.putExtra("MaNV", user);
+                i.putExtra("LoaiTK", "nhanvien"); // Truyền loại tài khoản
                 startActivity(i);
                 finish();
-            } else if (aDao.checkLogin(user, pass) > 0) {
-                Toast.makeText(this, "Login thành công", Toast.LENGTH_SHORT).show();
-                rememberUser(user, pass, chkSave.isChecked());
+            } else if (adminLoginResult == 1) {
+                Toast.makeText(this, "Login thành công vào tài khoản admin", Toast.LENGTH_SHORT).show();
+                rememberUser(user, pass, chkSave.isChecked(), "admin");
                 Intent i = new Intent(login.this, MainActivity.class);
                 i.putExtra("MaNV", user);
+                i.putExtra("LoaiTK", "admin"); // Truyền loại tài khoản
                 startActivity(i);
                 finish();
             } else {
@@ -87,7 +91,7 @@ public class login extends AppCompatActivity {
         }
     }
 
-    private void rememberUser(String u, String p, boolean status) {
+    private void rememberUser(String u, String p, boolean status, String loaiTaiKhoan) {
         SharedPreferences pref = getSharedPreferences("User_File", MODE_PRIVATE);
         SharedPreferences.Editor edit = pref.edit();
         if (!status) {
@@ -97,6 +101,7 @@ public class login extends AppCompatActivity {
             edit.putString("Username", u);
             edit.putString("Password", p);
             edit.putBoolean("Remember", status);
+            edit.putString("LoaiTaiKhoan", loaiTaiKhoan); // Lưu loại tài khoản
         }
         //lưu lại toàn bộ
         edit.commit();

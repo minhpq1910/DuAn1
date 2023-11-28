@@ -38,7 +38,7 @@ public class nhanVienSpinnerAdapter extends ArrayAdapter<nhanVien> {
         final nhanVien item = list.get(position);
         if (item != null) {
             tvMaTV = v.findViewById(R.id.tvMaTVsp);
-            tvMaTV.setText(item.getMaNV() + ". ");
+            tvMaTV.setText(item.getTaiKhoan() + ". ");
             tvTenTV = v.findViewById(R.id.tvTenTVSp);
             tvTenTV.setText(item.getHoTen());
         }
@@ -55,7 +55,7 @@ public class nhanVienSpinnerAdapter extends ArrayAdapter<nhanVien> {
         final nhanVien item = list.get(position);
         if (item != null) {
             tvMaTV = v.findViewById(R.id.tvMaTVsp);
-            tvMaTV.setText(item.getMaNV() + ". ");
+            tvMaTV.setText(item.getTaiKhoan() + ". ");
             tvTenTV = v.findViewById(R.id.tvTenTVSp);
             tvTenTV.setText(item.getHoTen());
         }

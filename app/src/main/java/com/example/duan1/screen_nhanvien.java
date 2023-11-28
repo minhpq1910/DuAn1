@@ -14,21 +14,25 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.duan1.dao.nhanVienDao;
 import com.example.duan1.fragment.frg_doanhthu;
 import com.example.duan1.fragment.frg_doimatkhau;
 import com.example.duan1.fragment.frg_hoadon;
 import com.example.duan1.fragment.frg_loaihang;
 import com.example.duan1.fragment.frg_sanpham;
+import com.example.duan1.model.nhanVien;
 import com.google.android.material.navigation.NavigationView;
 
 public class screen_nhanvien extends AppCompatActivity {
     Toolbar toolbar_nv;
     NavigationView navigationView_nv;
     DrawerLayout drawerLayout_nv;
+    nhanVienDao nvDao;
     Context context = this;
 
     @SuppressLint("WrongViewCast")
@@ -45,7 +49,9 @@ public class screen_nhanvien extends AppCompatActivity {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout_nv, toolbar_nv, R.string.open_nv, R.string.close_nv);
         drawerLayout_nv.addDrawerListener(toggle);
         toggle.syncState();
-//        NavigationUser();
+        NavigationUser();
+
+
 
 
         navigationView_nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -103,8 +109,11 @@ public class screen_nhanvien extends AppCompatActivity {
         TextView tvUser = headerView.findViewById(R.id.NameUser);
         // lấy tên người dùng từ Intent
         Intent i = getIntent();
-        String tentv = i.getStringExtra("MaNV");
-        tvUser.setText(tentv);
+        String tennv = i.getStringExtra("MaNV");
+        nvDao = new nhanVienDao(this);
+        nhanVien nvien = nvDao.getID(tennv);
+        String username = nvien.getHoTen();
+        tvUser.setText("NV:  " + username);
     }
 
     public void relaceFrg(Fragment frg) {

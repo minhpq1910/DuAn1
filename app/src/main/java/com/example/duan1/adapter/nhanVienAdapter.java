@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import com.example.duan1.R;
 import com.example.duan1.fragment.frg_nhanvien;
 import com.example.duan1.model.nhanVien;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -22,7 +23,7 @@ public class nhanVienAdapter extends ArrayAdapter<nhanVien> {
     frg_nhanvien fragment;
     private ArrayList<nhanVien> list;
     TextView tvMaNV, tvTenNV, tvMK;
-    ImageView imgDel;
+    ImageView imgDel, AvtNv;
 
     public nhanVienAdapter(@NonNull Context context, frg_nhanvien fragment, ArrayList<nhanVien> list) {
         super(context, 0, list);
@@ -42,7 +43,7 @@ public class nhanVienAdapter extends ArrayAdapter<nhanVien> {
         final nhanVien item = list.get(position);
         if (item != null) {
             tvMaNV = v.findViewById(R.id.tvMaNV);
-            tvMaNV.setText("Mã nhân viên: " + item.getMaNV());
+            tvMaNV.setText("Tên Đăng Nhập: " + item.getTaiKhoan());
 
             tvTenNV = v.findViewById(R.id.tvTenNV);
             tvTenNV.setText("Tên nhân viên: " + item.getHoTen());
@@ -50,14 +51,16 @@ public class nhanVienAdapter extends ArrayAdapter<nhanVien> {
             tvMK.setText("Mật khẩu: " + item.getMatKhau());
 
             imgDel = v.findViewById(R.id.imgDeleteLS);
+            AvtNv = v.findViewById(R.id.AvtNv);
+            Picasso.get().load(item.getAvt()).into(AvtNv);
+
         }
 
         imgDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // gọi phương thức xóa
-                fragment.xoa(String.valueOf(item.getMaNV()));
-
+                fragment.xoa(String.valueOf(item.getTaiKhoan()));
             }
         });
         return v;

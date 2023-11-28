@@ -30,17 +30,22 @@
         android:layout_marginRight="5dp"
         android:layout_marginBottom="20dp" />
 
-    <TextView
-        android:id="@+id/tvSL"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginRight="5dp"
-        android:layout_marginBottom="20dp"
-        android:text=" Số lượng: " />
+        android:layout_marginBottom="20dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edSL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint=" Số lương" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:id="@+id/tvGia"
+        android:id="@+id/tvGiaSP"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"

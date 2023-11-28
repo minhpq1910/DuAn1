@@ -1,23 +1,24 @@
 package com.example.duan1.model;
 
 public class nhanVien {
-    private String MaNV, HoTen, MatKhau;
+    private String TaiKhoan, HoTen, MatKhau, Avt;
 
     public nhanVien() {
     }
 
-    public nhanVien(String maNV, String hoTen, String matKhau) {
-        MaNV = maNV;
+    public nhanVien(String taiKhoan, String hoTen, String matKhau, String avt) {
+        TaiKhoan = taiKhoan;
         HoTen = hoTen;
         MatKhau = matKhau;
+        Avt = avt;
     }
 
-    public String getMaNV() {
-        return MaNV;
+    public String getTaiKhoan() {
+        return TaiKhoan;
     }
 
-    public void setMaNV(String maNV) {
-        MaNV = maNV;
+    public void setTaiKhoan(String taiKhoan) {
+        TaiKhoan = taiKhoan;
     }
 
     public String getHoTen() {
@@ -34,5 +35,13 @@ public class nhanVien {
 
     public void setMatKhau(String matKhau) {
         MatKhau = matKhau;
+    }
+
+    public String getAvt() {
+        return Avt;
+    }
+
+    public void setAvt(String avt) {
+        Avt = avt;
     }
 }

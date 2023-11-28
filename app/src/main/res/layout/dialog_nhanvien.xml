@@ -1,44 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/edMaNV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Mã Nhân Viên"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"/>
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edTenNV"
+            android:id="@+id/edMaNV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint=" Tên Nhân Viên"/>
+            android:hint="Tên Đăng Nhập" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edUrlNV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Url Ảnh" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edTenNV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint=" Tên Nhân Viên" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edMK_NV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint=" MK"/>
+            android:hint=" Mật khẩu" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtNhapLaiMKMK_NV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint=" Nhập lại mât khẩu" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -46,26 +82,28 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="20dp">
+        android:layout_margin="20dp"
+        android:orientation="horizontal">
+
         <Button
             android:id="@+id/btnSaveTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Lưu"
-            android:drawableStart="@drawable/ic_save"
             android:layout_marginHorizontal="20dp"
+            android:layout_weight="1"
             android:backgroundTint="#4CAF50"
-            android:layout_weight="1"/>
+            android:drawableStart="@drawable/ic_save"
+            android:text="Lưu" />
+
         <Button
             android:id="@+id/btnCancelTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hủy"
-            android:drawableStart="@drawable/ic_cancel"
-            android:backgroundTint="#F44336"
             android:layout_marginHorizontal="20dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:backgroundTint="#F44336"
+            android:drawableStart="@drawable/ic_cancel"
+            android:text="Hủy" />
     </LinearLayout>
 
 </LinearLayout>

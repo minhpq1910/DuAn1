@@ -4,10 +4,12 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,27 +48,24 @@ public class frg_hoadon extends Fragment {
     Dialog dialog;
     EditText edMaHD;
     Spinner spNV, spSP;
-    TextView tvNgay, tvSL, tvGia;
+    EditText tvSL;
+    TextView tvNgay, tvGia;
     CheckBox chkTrangThai;
     Button btnSave, btnCancel;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-
     nhanVienSpinnerAdapter nvSpinAdapter;
     ArrayList<nhanVien> listNVien;
     nhanVienDao nvDAO;
-    nhanVien nv;
     String maNVien;
-
     sanPhamSpinnerAdapter spSpinAdapter;
     ArrayList<sanpham> listSP;
     sanPhamDao spDAO;
     sanpham sp;
-    int maSP, Gia, SL;
-    int positionTV, positionSach;
-
+    int maSP, Gia;
     public frg_hoadon() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -79,15 +78,7 @@ public class frg_hoadon extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDialog(getActivity(), 0);
-            }
-        });
-        lvHD.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                item = list.get(position);
-                openDialog(getActivity(), 1);// update
-                return false;
+                openDialog(getActivity());
             }
         });
         capNhatlv();
@@ -100,15 +91,15 @@ public class frg_hoadon extends Fragment {
         lvHD.setAdapter(adapter);
     }
 
-    protected void openDialog(final Context context, final int type) {
+    protected void openDialog(final Context context) {
         dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_hoadon);
         edMaHD = dialog.findViewById(R.id.edMaHD);
         spNV = dialog.findViewById(R.id.spMaNV);
         spSP = dialog.findViewById(R.id.spMaSP);
         tvNgay = dialog.findViewById(R.id.tvNgay);
-        tvSL = dialog.findViewById(R.id.tvSL);
-        tvGia = dialog.findViewById(R.id.tvGia);
+        tvSL = dialog.findViewById(R.id.edSL);
+        tvGia = dialog.findViewById(R.id.tvGiaSP);
         chkTrangThai = dialog.findViewById(R.id.chkTrangThai);
         btnCancel = dialog.findViewById(R.id.btnCancelHD);
         btnSave = dialog.findViewById(R.id.btnSaveHD);
@@ -124,7 +115,7 @@ public class frg_hoadon extends Fragment {
         spNV.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                maNVien = listNVien.get(position).getMaNV();
+                maNVien = listNVien.get(position).getTaiKhoan();
 //                Toast.makeText(context, "Chọn: "+listThanhVien.get(position).getHoTen(), Toast.LENGTH_SHORT).show();
             }
 
@@ -144,8 +135,6 @@ public class frg_hoadon extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 maSP = listSP.get(position).getMaSP();
-                SL = listSP.get(position).getSL();
-                tvSL.setText("Số lượng: " + SL);
                 Gia = listSP.get(position).getGia();
                 tvGia.setText("Giá: " + Gia);
 //                Toast.makeText(context, "Chọn: "+listSach.get(position).getTenSach(), Toast.LENGTH_SHORT).show();
@@ -156,31 +145,6 @@ public class frg_hoadon extends Fragment {
 
             }
         });
-
-        // edit
-        if (type != 0) {
-            edMaHD.setText(String.valueOf(item.getMaHD()));
-            for (int i = 0; i < listNVien.size(); i++)
-                if (item.getMaNV() == (listNVien.get(i).getMaNV())) {
-                    positionTV = i;
-                }
-            spNV.setSelection(positionTV);
-
-            for (int i = 0; i < listSP.size(); i++)
-                if (item.getMaSP() == (listSP.get(i).getMaSP())) {
-                    positionSach = i;
-                }
-            spSP.setSelection(positionSach);
-
-            tvNgay.setText("Ngày thuê: " + sdf.format(item.getNgay()));
-            tvSL.setText("Số lượng: " + item.getSL());
-            tvGia.setText("Giá: " + item.getGia());
-            if (item.getTrangThai() == 1) {
-                chkTrangThai.setChecked(true);
-            } else {
-                chkTrangThai.setChecked(false);
-            }
-        }
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,33 +161,22 @@ public class frg_hoadon extends Fragment {
                 item.setMaNV(String.valueOf(maNVien));
                 item.setNgay(new Date());
                 item.setGia(Gia);
-                item.setSL(SL);
+                item.setSL(Integer.parseInt(tvSL.getText().toString()));
                 if (chkTrangThai.isChecked()) {
                     item.setTrangThai(1);
                 } else {
                     item.setTrangThai(0);
                 }
-                if (type == 0) {
-                    // insert
-                    long insert = dao.insert(item);
-                    if (insert > 0) {
-                        Toast.makeText(context, "Thêm thành công", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(context, "Thêm thất bại", Toast.LENGTH_SHORT).show();
-                    }
-                    capNhatlv();
-                    dialog.dismiss();
+                // insert
+                long insert = dao.insert(item);
+                if (insert > 0) {
+                    Toast.makeText(context, "Thêm thành công", Toast.LENGTH_SHORT).show();
                 } else {
-                    // update
-                    item.setMaHD(Integer.parseInt(edMaHD.getText().toString()));
-                    if (dao.update(item) > 0) {
-                        Toast.makeText(context, "Sửa thành công", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(context, "Sửa thất bại", Toast.LENGTH_SHORT).show();
-                    }
-                    capNhatlv();
-                    dialog.dismiss();
+                    Toast.makeText(context, "Thêm thất bại", Toast.LENGTH_SHORT).show();
                 }
+                capNhatlv();
+                dialog.dismiss();
+
             }
         });
         dialog.show();

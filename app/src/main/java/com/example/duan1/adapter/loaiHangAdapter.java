@@ -1,6 +1,8 @@
 package com.example.duan1.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +49,7 @@ public class loaiHangAdapter extends ArrayAdapter<loaihang> {
             tvTenLoai.setText("Tên Loại: " + item.getTenLoaiH());
 
             imgDel = v.findViewById(R.id.imgDeleteLH);
+            checkAn();
         }
 
         imgDel.setOnClickListener(new View.OnClickListener() {
@@ -57,5 +60,18 @@ public class loaiHangAdapter extends ArrayAdapter<loaihang> {
             }
         });
         return v;
+    }
+    public void checkAn() {
+        // Lấy loại tài khoản từ SharedPreferences
+        SharedPreferences pref = context.getSharedPreferences("User_File", Context.MODE_PRIVATE);
+        String loaiTaiKhoan = pref.getString("LoaiTaiKhoan", "");
+        Log.d("LoaiTaiKhoan", loaiTaiKhoan);
+        if ("admin".equals(loaiTaiKhoan)) {
+            // Hiển thị nút xoá khi là admin
+            imgDel.setVisibility(View.VISIBLE);
+        } else {
+            // Ẩn nút xoá khi là nhân viên
+            imgDel.setVisibility(View.GONE);
+        }
     }
 }

@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.SearchView;
@@ -38,8 +39,6 @@ public class frg_sanpham extends Fragment {
     sanPhamAdapter adapter;
     sanpham item;
     List<sanpham> list;
-
-
     FloatingActionButton fab;
     Dialog dialog;
     EditText edMaSP, edTenSP, edSL, edGia, edAvt;
@@ -51,8 +50,8 @@ public class frg_sanpham extends Fragment {
     loaiHangDao loaihangDAO;
     loaihang loaiHang;
     int maLoaiH, position;
-
     private SearchView searchView;
+    private String loaiTaiKhoan;
 
     public frg_sanpham() {
         // Required empty public constructor
@@ -64,22 +63,15 @@ public class frg_sanpham extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_frg_sanpham, container, false);
         lvSP = v.findViewById(R.id.lvSanP);
-
         dao = new sanPhamDao(getActivity());
         capNhatLv();
         fab = v.findViewById(R.id.fab);
+        checkAn();
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openDialog(getActivity(), 0);
-            }
-        });
-        lvSP.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                item = list.get(position);
-                openDialog(getActivity(), 1);
-                return false;
             }
         });
         return v;
@@ -217,6 +209,27 @@ public class frg_sanpham extends Fragment {
             return Integer.parseInt(string);
         } catch (NumberFormatException e) {
             return defaultValue;
+        }
+    }
+
+    public void checkAn() {
+        SharedPreferences pref = getActivity().getSharedPreferences("User_File", Context.MODE_PRIVATE);
+        String loaiTaiKhoan = pref.getString("LoaiTaiKhoan", "");
+        Log.d("LoaiTaiKhoan", loaiTaiKhoan);
+        if ("admin".equals(loaiTaiKhoan)) {
+            // Hiển thị nút xoá khi là admin
+            fab.setVisibility(View.VISIBLE);
+            lvSP.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    item = list.get(position);
+                    openDialog(getActivity(), 1);
+                    return false;
+                }
+            });
+        } else {
+            // Ẩn nút xoá khi là nhân viên
+            fab.setVisibility(View.GONE);
         }
     }
 

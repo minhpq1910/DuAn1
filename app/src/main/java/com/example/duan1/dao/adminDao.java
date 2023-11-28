@@ -41,20 +41,20 @@ public class adminDao {
         ContentValues values = new ContentValues();
         values.put("HoTen", obj.getHoTen());
         values.put("MatKhau", obj.getMatKhau());
-        return db.update("NhanVien", values, "MaNV = ?", new String[]{String.valueOf(obj.getTaiKhoan())});
+        return db.update("admin", values, "taiKhoan = ?", new String[]{String.valueOf(obj.getTaiKhoan())});
     }
 
     public long delete(String id) {
-        return db.delete("NhanVien", "MaNV = ?", new String[]{String.valueOf(id)});
+        return db.delete("admin", "taiKhoan = ?", new String[]{String.valueOf(id)});
     }
 
     public List<admin> getAll() {
-        String sql = "SELECT * FROM NhanVien";
+        String sql = "SELECT * FROM admin";
         return getData(sql);
     }
 
     public admin getID(String id) {
-        String sql = "SELECT * FROM NhanVien WHERE MaNV=?";
+        String sql = "SELECT * FROM admin WHERE taiKhoan=?";
         List<admin> list = getData(sql, id);
         return list.get(0);
     }
@@ -76,7 +76,7 @@ public class adminDao {
         while (cursor.moveToNext()) {
             admin obj = new admin();
             obj.setTaiKhoan(cursor.getString(cursor.getColumnIndex("taiKhoan")));
-            obj.setTaiKhoan(cursor.getString(cursor.getColumnIndex("hoTen")));
+            obj.setHoTen(cursor.getString(cursor.getColumnIndex("hoTen")));
             obj.setMatKhau(cursor.getString(cursor.getColumnIndex("MatKhau")));
             list.add(obj);
         }

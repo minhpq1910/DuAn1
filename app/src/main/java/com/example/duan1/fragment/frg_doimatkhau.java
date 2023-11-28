@@ -13,13 +13,16 @@ import androidx.fragment.app.Fragment;
 
 import com.example.duan1.R;
 import com.example.duan1.dao.adminDao;
+import com.example.duan1.dao.nhanVienDao;
 import com.example.duan1.model.admin;
+import com.example.duan1.model.nhanVien;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class frg_doimatkhau extends Fragment {
     TextInputEditText edPassOld, edPassChange, edRePassChange;
     Button btnSaveUserChange, btnCancleUserChange;
     adminDao addao;
+    nhanVienDao nvDao;
 
 
     @Override
@@ -44,13 +47,14 @@ public class frg_doimatkhau extends Fragment {
         btnSaveUserChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences pref = getActivity().getSharedPreferences("USER_FILE", Context.MODE_PRIVATE);
-                String user = pref.getString("USERNAME","");
+                SharedPreferences pref = getActivity().getSharedPreferences("User_File", Context.MODE_PRIVATE);
+                String user = pref.getString("Username","");
                 if (validate() > 0) {
-                    admin admin = addao.getID(user);
-                    admin.setMatKhau(edPassChange.getText().toString());
 
-                    if (addao.updatePass(admin) > 0) {
+                    nhanVien nv = nvDao.getID(user);
+                    nv.setMatKhau(edPassChange.getText().toString());
+
+                    if (nvDao.updatePass(nv) > 0) {
                         Toast.makeText(getActivity(), "Thay đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
                         edPassOld.setText("");
                         edPassChange.setText("");
@@ -58,6 +62,17 @@ public class frg_doimatkhau extends Fragment {
                     } else {
                         Toast.makeText(getActivity(), "Thay đổi mật khẩu thất bại", Toast.LENGTH_SHORT).show();
                     }
+//                    admin admin = addao.getID(user);
+//                    admin.setMatKhau(edPassChange.getText().toString());
+//
+//                    if (addao.updatePass(admin) > 0) {
+//                        Toast.makeText(getActivity(), "Thay đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
+//                        edPassOld.setText("");
+//                        edPassChange.setText("");
+//                        edRePassChange.setText("");
+//                    } else {
+//                        Toast.makeText(getActivity(), "Thay đổi mật khẩu thất bại", Toast.LENGTH_SHORT).show();
+//                    }
                 }
             }
         });
@@ -70,8 +85,8 @@ public class frg_doimatkhau extends Fragment {
             Toast.makeText(getContext(), "Bạn phải nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
             check = -1;
         }else {
-            SharedPreferences pref = getActivity().getSharedPreferences("USER_FILE", Context.MODE_PRIVATE);
-            String passOld = pref.getString("PASSWORD","");
+            SharedPreferences pref = getActivity().getSharedPreferences("User_File", Context.MODE_PRIVATE);
+            String passOld = pref.getString("Password","");
             String pass = edPassChange.getText().toString();
             String rePass = edRePassChange.getText().toString();
             if (!passOld.equals(edPassOld.getText().toString())){

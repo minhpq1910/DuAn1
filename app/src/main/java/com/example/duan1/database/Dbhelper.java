@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Dbhelper extends SQLiteOpenHelper {
     public Dbhelper(Context context) {
-        super(context, "shop", null, 7);
+        super(context, "shop", null, 6);
     }
 
     @Override
@@ -20,9 +20,10 @@ public class Dbhelper extends SQLiteOpenHelper {
 
         // Tạo bảng nhân viên
         String tb_NhanVien = "create table NhanVien(" +
-                "MaNV text primary key," +
+                "taiKhoan text primary key," +
                 "HoTen text not null," +
-                "MatKhau text not null)";
+                "MatKhau text not null," +
+                "Avt text not null)";
         db.execSQL(tb_NhanVien);
 
         // Tạo bảng loại hàng
@@ -53,19 +54,19 @@ public class Dbhelper extends SQLiteOpenHelper {
         db.execSQL(tb_HoaDon);
 
         //data mẫu
-        db.execSQL("INSERT INTO admin VALUES ('admin','Minh','1111')");
+        db.execSQL("INSERT INTO admin VALUES ('admin','Admin','1111')");
         db.execSQL("INSERT INTO LoaiHang VALUES (1, 'Đồ ăn'),(2,'Nước uống'),(3, 'Đồ phụ gia')");
         db.execSQL("INSERT INTO SanPham VALUES (1, 'BimBim', 25, 5000, 1,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZCw7s_SSZDwXbvJm2ztlAmv01xd3ovChqAw&usqp=CAU'), (2, 'Coca-cola', 100, 16000, 2, 'https://tienthanhltd.com.vn/assets/shops/2018_09/cocacola15l.jpg'), (3, 'Mì chính', 50, 50000, 3, 'https://pvmarthanoi.com.vn/wp-content/uploads/2023/02/bot-ngot-ajinomoto-goi-1kg-201912111050340356-500x600.jpg')");
-        db.execSQL("INSERT INTO NhanVien VALUES ('PQMinh','Phạm Quang Minh','1234'),('nv01','Trần Văn A','123abc')");
-        db.execSQL("INSERT INTO HoaDon VALUES (1,2,'PQMinh', 2, 32000, 1, '16/11/2023')," +
-                "(2,1,'PQMinh', 3, 15000, 1, '17/11/2023')," +
-                "(3,2,'PQMinh', 1, 16000, 1, '16/11/2023')");
+        db.execSQL("INSERT INTO NhanVien VALUES ('nv01','Phạm Quang Minh','1111','https://i.pinimg.com/originals/4d/86/5e/4d865ea47a8675d682ff35ad904a0af6.png'),('nv02','Dương Quang Tùng','123abc','https://i.pinimg.com/736x/c9/b7/93/c9b7932fb30503df0d6e80c28cb8dcb3.jpg')");
+        db.execSQL("INSERT INTO HoaDon VALUES (1,2,'nv01', 2, 32000, 1, '2023/11/18')," +
+                "(2,1,'nv01', 3, 15000, 1, '2023/11/18')," +
+                "(3,2,'nv02', 1, 16000, 1, '2023/11/18')");
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        if (i != i1){
+        if (i != i1) {
             sqLiteDatabase.execSQL("drop table if exists NhanVien");
             sqLiteDatabase.execSQL("drop table if exists admin");
             sqLiteDatabase.execSQL("drop table if exists LoaiHang");

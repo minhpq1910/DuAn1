@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.duan1.dao.adminDao;
 import com.example.duan1.fragment.frg_addNv;
 import com.example.duan1.fragment.frg_doanhthu;
 import com.example.duan1.fragment.frg_doimatkhau;
@@ -25,13 +26,16 @@ import com.example.duan1.fragment.frg_hoadon;
 import com.example.duan1.fragment.frg_loaihang;
 import com.example.duan1.fragment.frg_nhanvien;
 import com.example.duan1.fragment.frg_sanpham;
+import com.example.duan1.model.admin;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     NavigationView navigationView;
     DrawerLayout drawerLayout;
+    adminDao aDao;
     Context context = this;
+
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-//        NavigationUser();
+        NavigationUser();
 
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -96,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
                 }
 
 
-
                 drawerLayout.closeDrawer(navigationView);
                 return true;
             }
@@ -113,12 +116,12 @@ public class MainActivity extends AppCompatActivity {
         TextView tvUser = headerView.findViewById(R.id.NameUser);
         // lấy tên người dùng từ Intent
         Intent i = getIntent();
-        String tentv = i.getStringExtra("MaNV");
-        tvUser.setText(tentv);
-        // điều hướng
-        if (tentv.equals("hihi")) {
-            nv.getMenu().findItem(R.id.menuTNV).setVisible(true);
-        }
+        String tenad = i.getStringExtra("MaNV");
+        aDao = new adminDao(this);
+        admin ad = aDao.getID(tenad);
+        String username = ad.getHoTen();
+        tvUser.setText("AD:  " + username);
+
     }
 
     public void relaceFrg(Fragment frg) {

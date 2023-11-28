@@ -1,7 +1,9 @@
 package com.example.duan1.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,12 +64,17 @@ public class hoaDonAdapter extends ArrayAdapter<hoadon> {
             tv_nhanV.setText("Nhân viên: " + nv.getHoTen());
             tv_SL = v.findViewById(R.id.tv_SL);
             tv_SL.setText("Số lượng: " + item.getSL());
+
             tv_Gia = v.findViewById(R.id.tv_Gia);
-            tv_Gia.setText("Giá: " + item.getGia());
+
+            int gia = item.getGia();
+            gia = sp.getGia() * item.getSL();
+            tv_Gia.setText("Giá: " + gia);
+
 
             tv_trangthai = v.findViewById(R.id.tv_trangthai);
             if (item.getTrangThai() == 1) {
-                tv_trangthai.setTextColor(Color.BLUE);
+                tv_trangthai.setTextColor(Color.GREEN);
                 tv_trangthai.setText("Đã thanh toán");
             } else {
                 tv_trangthai.setTextColor(Color.RED);
@@ -76,6 +83,8 @@ public class hoaDonAdapter extends ArrayAdapter<hoadon> {
             tv_Ngay = v.findViewById(R.id.tv_Ngay);
             tv_Ngay.setText("Ngày : " + sdf.format(item.getNgay()));
             imgDel = v.findViewById(R.id.imgdelete_HD);
+
+            anXoa();
         }
         imgDel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,5 +95,18 @@ public class hoaDonAdapter extends ArrayAdapter<hoadon> {
         });
         return v;
 
+    }
+    public void anXoa() {
+        // Lấy loại tài khoản từ SharedPreferences
+        SharedPreferences pref = context.getSharedPreferences("User_File", Context.MODE_PRIVATE);
+        String loaiTaiKhoan = pref.getString("LoaiTaiKhoan", "");
+        Log.d("LoaiTaiKhoan", loaiTaiKhoan);
+        if ("admin".equals(loaiTaiKhoan)) {
+            // Hiển thị nút xoá khi là admin
+            imgDel.setVisibility(View.VISIBLE);
+        } else {
+            // Ẩn nút xoá khi là nhân viên
+            imgDel.setVisibility(View.GONE);
+        }
     }
 }

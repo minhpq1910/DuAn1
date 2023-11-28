@@ -4,10 +4,12 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +37,7 @@ public class frg_loaihang extends Fragment {
     Dialog dialog;
     EditText edMaLoaiHang, edTenLoaiHang;
     Button btnSave, btnCancel;
+
     public frg_loaihang() {
         // Required empty public constructor
     }
@@ -48,23 +51,13 @@ public class frg_loaihang extends Fragment {
         fab = v.findViewById(R.id.fab);
         dao = new loaiHangDao(getActivity());
         capNhatLv();
-
+        checkAn();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openDialog(getActivity(), 0);
             }
         });
-
-        lvLoaiH.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                item = list.get(position);
-                openDialog(getActivity(), 1);
-                return false;
-            }
-        });
-
         return v;
     }
 
@@ -152,9 +145,28 @@ public class frg_loaihang extends Fragment {
         if (edTenLoaiHang.getText().length() == 0) {
             Toast.makeText(getContext(), "Bạn phải nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
             check = -1;
-
         }
         return check;
+    }
 
+    public void checkAn() {
+        SharedPreferences pref = getActivity().getSharedPreferences("User_File", Context.MODE_PRIVATE);
+        String loaiTaiKhoan = pref.getString("LoaiTaiKhoan", "");
+        Log.d("LoaiTaiKhoan", loaiTaiKhoan);
+        if ("admin".equals(loaiTaiKhoan)) {
+            // Hiển thị nút xoá khi là admin
+            fab.setVisibility(View.VISIBLE);
+            lvLoaiH.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    item = list.get(position);
+                    openDialog(getActivity(), 1);
+                    return false;
+                }
+            });
+        } else {
+            // Ẩn nút xoá khi là nhân viên
+            fab.setVisibility(View.GONE);
+        }
     }
 }

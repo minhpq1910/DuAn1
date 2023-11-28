@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.duan1.R;
@@ -23,8 +22,6 @@ import java.util.GregorianCalendar;
 
 public class frg_doanhthu extends Fragment {
     Button btnDoanhThu;
-
-    ImageView btnTuNgay, btnDenNgay;
     EditText edTuNgay, edDenNgay;
     TextView tvDoanhThu;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
@@ -43,11 +40,9 @@ public class frg_doanhthu extends Fragment {
         edTuNgay = v.findViewById(R.id.edTuNgay);
         edDenNgay = v.findViewById(R.id.edDenNgay);
         tvDoanhThu = v.findViewById(R.id.tvDoanhThu);
-        btnTuNgay = v.findViewById(R.id.btnTuNgay);
-        btnDenNgay = v.findViewById(R.id.btnDenNgay);
         btnDoanhThu = v.findViewById(R.id.btnDoanhThu);
 
-        btnTuNgay.setOnClickListener(new View.OnClickListener() {
+        edTuNgay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar c = Calendar.getInstance();
@@ -59,7 +54,7 @@ public class frg_doanhthu extends Fragment {
             }
         });
 
-        btnDenNgay.setOnClickListener(new View.OnClickListener() {
+        edDenNgay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar c = Calendar.getInstance();
@@ -77,7 +72,7 @@ public class frg_doanhthu extends Fragment {
                 String tuNgay = edTuNgay.getText().toString();
                 String denNgay = edDenNgay.getText().toString();
                 hoaDonDao hoaDonDao = new hoaDonDao(getActivity());
-                tvDoanhThu.setText("Doanh Thu: "+hoaDonDao.getDoanhThu(tuNgay,denNgay)+ "VND");
+                tvDoanhThu.setText("Doanh Thu: "+hoaDonDao.getDoanhThu(tuNgay,denNgay)+ " VND");
             }
         });
         return v;

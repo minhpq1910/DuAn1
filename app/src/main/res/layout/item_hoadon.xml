@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:text="Giá: 10.000đ"
-                android:textColor="@color/black"
+                android:textColor="@color/pink_A400"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -97,7 +97,6 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/tv_Ngay"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="6dp"
             android:text="@string/trangthai_datra"
             android:textColor="@color/green_A400"
             android:textSize="16sp"
