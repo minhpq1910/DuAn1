@@ -4,12 +4,11 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +47,7 @@ public class frg_hoadon extends Fragment {
     Dialog dialog;
     EditText edMaHD;
     Spinner spNV, spSP;
-    EditText tvSL;
+    EditText edSL;
     TextView tvNgay, tvGia;
     CheckBox chkTrangThai;
     Button btnSave, btnCancel;
@@ -107,19 +106,19 @@ public class frg_hoadon extends Fragment {
         spNV = dialog.findViewById(R.id.spMaNV);
         spSP = dialog.findViewById(R.id.spMaSP);
         tvNgay = dialog.findViewById(R.id.tvNgay);
-        tvSL = dialog.findViewById(R.id.edSL);
+        edSL = dialog.findViewById(R.id.edSL);
         tvGia = dialog.findViewById(R.id.tvGiaSP);
         chkTrangThai = dialog.findViewById(R.id.chkTrangThai);
         btnCancel = dialog.findViewById(R.id.btnCancelHD);
         btnSave = dialog.findViewById(R.id.btnSaveHD);
-        // set ngày
-        tvNgay.setText("Ngày: " + sdf.format(new Date()));
-        edMaHD.setEnabled(false);
 
+        edMaHD.setEnabled(false);
         nvDAO = new nhanVienDao(context);
         listNVien = new ArrayList<nhanVien>();
         listNVien = (ArrayList<nhanVien>) nvDAO.getAll();
         nvSpinAdapter = new nhanVienSpinnerAdapter(context, listNVien);
+        // set ngày
+        tvNgay.setText("Ngày: " + sdf.format(new Date()));
         spNV.setAdapter(nvSpinAdapter);
         spNV.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -171,7 +170,7 @@ public class frg_hoadon extends Fragment {
             spSP.setSelection(positionSP);
 
             tvNgay.setText("Ngày thuê: " + sdf.format(item.getNgay()));
-            tvSL.setText("" + item.getSL());
+            edSL.setText("" + item.getSL());
             tvGia.setText("Giá: " + item.getGia());
             if (item.getTrangThai() == 1) {
                 chkTrangThai.setChecked(true);
@@ -180,18 +179,16 @@ public class frg_hoadon extends Fragment {
             }
 
             if (item.getTrangThai() == 0) {
-                edMaHD.setEnabled(true);
                 spNV.setEnabled(true);
                 spSP.setEnabled(true);
-                tvSL.setEnabled(true);
+                edSL.setEnabled(true);
                 chkTrangThai.setEnabled(true);
                 btnSave.setEnabled(true);
             } else {
                 // Vô hiệu hóa nếu trạng thái không phải là 0
-                edMaHD.setEnabled(false);
                 spNV.setEnabled(false);
                 spSP.setEnabled(false);
-                tvSL.setEnabled(false);
+                edSL.setEnabled(false);
                 chkTrangThai.setEnabled(false);
                 btnSave.setEnabled(false);
             }
@@ -211,36 +208,66 @@ public class frg_hoadon extends Fragment {
                 item.setMaNV(String.valueOf(maNVien));
                 item.setNgay(new Date());
                 item.setGia(Gia);
-                item.setSL(Integer.parseInt(tvSL.getText().toString()));
+                item.setSL(parseInt(edSL.getText().toString(), 0));
                 if (chkTrangThai.isChecked()) {
                     item.setTrangThai(1);
                 } else {
                     item.setTrangThai(0);
                 }
-                if (type == 0) {
-                    // insert
-                    long insert = dao.insert(item);
-                    if (insert > 0) {
-                        Toast.makeText(context, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                if (validate() == 1) {
+                    if (type == 0) {
+                        // insert
+                        if (dao.insert(item) > 0) {
+                            Toast.makeText(context, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context, "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                        }
+                        capNhatlv();
+                        dialog.dismiss();
                     } else {
-                        Toast.makeText(context, "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                        // update
+                        item.setMaHD(Integer.parseInt(edMaHD.getText().toString()));
+                        if (dao.update(item) > 0) {
+                            Toast.makeText(context, "Update thành công", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context, "Update thất bại", Toast.LENGTH_SHORT).show();
+                        }
+                        capNhatlv();
+                        dialog.dismiss();
                     }
-                    capNhatlv();
-                    dialog.dismiss();
-                } else {
-                    // update
-                    item.setMaHD(Integer.parseInt(edMaHD.getText().toString()));
-                    if (dao.update(item) > 0) {
-                        Toast.makeText(context, "Update thành công", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(context, "Update thất bại", Toast.LENGTH_SHORT).show();
-                    }
-                    capNhatlv();
-                    dialog.dismiss();
                 }
             }
         });
         dialog.show();
+    }
+
+    public int validate() {
+        int check = -1;
+        String sl = edSL.getText().toString().trim();
+
+        if (TextUtils.isEmpty(sl)) {
+            Toast.makeText(getContext(), "Bạn phải nhập đủ thông tin", Toast.LENGTH_SHORT).show();
+        } else if (!TextUtils.isDigitsOnly(sl)) {
+            Toast.makeText(getContext(), "Số lượng phải là một số", Toast.LENGTH_SHORT).show();
+        } else {
+            // Nếu đầu vào là số, chuyển đổi sang kiểu số nguyên
+            int quantity = Integer.parseInt(sl);
+            if (quantity <= 0) {
+                // Nếu số lượng không lớn hơn 0, hiển thị một thông báo
+                Toast.makeText(getContext(), "Số lượng phải lớn hơn 0", Toast.LENGTH_SHORT).show();
+            } else {
+                check = 1;
+            }
+        }
+        return check;
+    }
+
+    public static int parseInt(String string, int defaultValue) {
+        try {
+            return Integer.parseInt(string);
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
     }
 
     public void xoa(final String Id) {

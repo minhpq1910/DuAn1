@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -172,7 +173,7 @@ public class frg_sanpham extends Fragment {
                 item.setGia(parseInt(edGia.getText().toString(), 0));
                 item.setUrlAvt(edAvt.getText().toString());
 
-                if (validate() > 0) {
+                if (validate() == 1) {
                     if (type == 0) {
                         if (dao.insert(item) > 0) {
                             Toast.makeText(context, "Thêm thành công", Toast.LENGTH_SHORT).show();
@@ -196,10 +197,30 @@ public class frg_sanpham extends Fragment {
     }
 
     public int validate() {
-        int check = 1;
+        int check = -1;
+
         if (edTenSP.getText().length() == 0 || edSL.getText().length() == 0 || edGia.getText().length() == 0 || edAvt.getText().length() == 0) {
             Toast.makeText(getContext(), "Bạn phải nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
-            check = -1;
+        } else {
+            String sl = edSL.getText().toString().trim();
+            String gia = edGia.getText().toString().trim();
+
+            if (!TextUtils.isDigitsOnly(sl) || Integer.parseInt(sl) <= 0) {
+                Toast.makeText(getContext(), "Số lượng phải là số lớn hơn 0", Toast.LENGTH_SHORT).show();
+            } else if (!TextUtils.isEmpty(gia)) {
+                try {
+                    double giaValue = Double.parseDouble(gia);
+                    if (giaValue <= 0) {
+                        Toast.makeText(getContext(), "Giá phải là số lớn hơn 0", Toast.LENGTH_SHORT).show();
+                    } else {
+                        check = 1; // Đặt giá trị check = 1 khi tất cả điều kiện hợp lệ
+                    }
+                } catch (NumberFormatException e) {
+                    Toast.makeText(getContext(), "Giá không hợp lệ", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                check = 1; // Đặt giá trị check = 1 khi tất cả điều kiện hợp lệ
+            }
         }
         return check;
     }

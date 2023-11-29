@@ -85,6 +85,7 @@ public class sanPhamAdapter extends ArrayAdapter<sanpham> {
         });
         return v;
     }
+
     public void checkAn() {
         // Lấy loại tài khoản từ SharedPreferences
         SharedPreferences pref = context.getSharedPreferences("LoaiTK_File", Context.MODE_PRIVATE);
