@@ -39,7 +39,6 @@ public class loaiHangSpinnerAdapter extends ArrayAdapter<loaihang> {
         if (item != null) {
             tvMaLoaiH = v.findViewById(R.id.tvMaLoaiHSpin);
             tvMaLoaiH.setText(item.getMaLoaiH() + ". ");
-
             tvTenLoaiH = v.findViewById(R.id.tvTenLoaiHSpin);
             tvTenLoaiH.setText(item.getTenLoaiH());
         }
