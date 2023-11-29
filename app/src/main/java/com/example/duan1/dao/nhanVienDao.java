@@ -69,14 +69,24 @@ public class nhanVienDao {
         }
         return 1;
     }
+    //quên mật khẩu
+    public String forgot(String taiKhoan) {
+        String sql = "SELECT MatKhau FROM NhanVien WHERE taiKhoan=?";
+        Cursor cursor = db.rawQuery(sql, new String[]{taiKhoan});
 
-    public long signUp(nhanVien obj) {
-        ContentValues values = new ContentValues();
-        values.put("taiKhoan", obj.getTaiKhoan());
-        values.put("HoTen", obj.getHoTen());
-        values.put("MatKhau", obj.getMatKhau());
-        values.put("Avt", obj.getAvt());
-        return db.insert("NhanVien", null, values);
+        if (cursor != null && cursor.moveToFirst()) {
+            int columnIndex = cursor.getColumnIndex("MatKhau");
+            if (columnIndex != -1) {
+                String matKhau = cursor.getString(columnIndex);
+                cursor.close();
+                return matKhau;
+            } else {
+                cursor.close();
+                return null; // Trả về null nếu "MatKhau" không phải là một cột hợp lệ
+            }
+        }
+
+        return null; // Trả về null nếu không tìm thấy tài khoản phù hợp hoặc cursor không có dữ liệu
     }
 
     @SuppressLint("Range")
