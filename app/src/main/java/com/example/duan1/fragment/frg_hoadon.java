@@ -62,14 +62,15 @@ public class frg_hoadon extends Fragment {
     sanPhamDao spDAO;
     sanpham sp;
     int maSP, Gia;
+    int positionNV, positionSP;
+
     public frg_hoadon() {
         // Required empty public constructor
     }
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_frg_hoadon, container, false);
         lvHD = v.findViewById(R.id.lvHoaDon);
@@ -78,7 +79,15 @@ public class frg_hoadon extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDialog(getActivity());
+                openDialog(getActivity(), 0);
+            }
+        });
+        lvHD.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                item = list.get(position);
+                openDialog(getActivity(), 1);// update
+                return false;
             }
         });
         capNhatlv();
@@ -91,7 +100,7 @@ public class frg_hoadon extends Fragment {
         lvHD.setAdapter(adapter);
     }
 
-    protected void openDialog(final Context context) {
+    protected void openDialog(final Context context, final int type) {
         dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_hoadon);
         edMaHD = dialog.findViewById(R.id.edMaHD);
@@ -146,6 +155,47 @@ public class frg_hoadon extends Fragment {
             }
         });
 
+        // edit
+        if (type != 0) {
+            edMaHD.setText(String.valueOf(item.getMaHD()));
+            for (int i = 0; i < listNVien.size(); i++)
+                if (item.getMaNV() == (listNVien.get(i).getTaiKhoan())) {
+                    positionNV = i;
+                }
+            spNV.setSelection(positionNV);
+
+            for (int i = 0; i < listSP.size(); i++)
+                if (item.getMaSP() == (listSP.get(i).getMaSP())) {
+                    positionSP = i;
+                }
+            spSP.setSelection(positionSP);
+
+            tvNgay.setText("Ngày thuê: " + sdf.format(item.getNgay()));
+            tvSL.setText("" + item.getSL());
+            tvGia.setText("Giá: " + item.getGia());
+            if (item.getTrangThai() == 1) {
+                chkTrangThai.setChecked(true);
+            } else {
+                chkTrangThai.setChecked(false);
+            }
+
+            if (item.getTrangThai() == 0) {
+                edMaHD.setEnabled(true);
+                spNV.setEnabled(true);
+                spSP.setEnabled(true);
+                tvSL.setEnabled(true);
+                chkTrangThai.setEnabled(true);
+                btnSave.setEnabled(true);
+            } else {
+                // Vô hiệu hóa nếu trạng thái không phải là 0
+                edMaHD.setEnabled(false);
+                spNV.setEnabled(false);
+                spSP.setEnabled(false);
+                tvSL.setEnabled(false);
+                chkTrangThai.setEnabled(false);
+                btnSave.setEnabled(false);
+            }
+        }
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,16 +217,27 @@ public class frg_hoadon extends Fragment {
                 } else {
                     item.setTrangThai(0);
                 }
-                // insert
-                long insert = dao.insert(item);
-                if (insert > 0) {
-                    Toast.makeText(context, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                if (type == 0) {
+                    // insert
+                    long insert = dao.insert(item);
+                    if (insert > 0) {
+                        Toast.makeText(context, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                    }
+                    capNhatlv();
+                    dialog.dismiss();
                 } else {
-                    Toast.makeText(context, "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                    // update
+                    item.setMaHD(Integer.parseInt(edMaHD.getText().toString()));
+                    if (dao.update(item) > 0) {
+                        Toast.makeText(context, "Update thành công", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, "Update thất bại", Toast.LENGTH_SHORT).show();
+                    }
+                    capNhatlv();
+                    dialog.dismiss();
                 }
-                capNhatlv();
-                dialog.dismiss();
-
             }
         });
         dialog.show();

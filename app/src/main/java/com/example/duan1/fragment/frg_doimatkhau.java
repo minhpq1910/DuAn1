@@ -51,21 +51,10 @@ public class frg_doimatkhau extends Fragment {
                 String user = pref.getString("Username","");
                 if (validate() > 0) {
 
-                    nhanVien nv = nvDao.getID(user);
-                    nv.setMatKhau(edPassChange.getText().toString());
-
-                    if (nvDao.updatePass(nv) > 0) {
-                        Toast.makeText(getActivity(), "Thay đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
-                        edPassOld.setText("");
-                        edPassChange.setText("");
-                        edRePassChange.setText("");
-                    } else {
-                        Toast.makeText(getActivity(), "Thay đổi mật khẩu thất bại", Toast.LENGTH_SHORT).show();
-                    }
-//                    admin admin = addao.getID(user);
-//                    admin.setMatKhau(edPassChange.getText().toString());
+//                    nhanVien nv = nvDao.getID(user);
+//                    nv.setMatKhau(edPassChange.getText().toString());
 //
-//                    if (addao.updatePass(admin) > 0) {
+//                    if (nvDao.updatePass(nv) > 0) {
 //                        Toast.makeText(getActivity(), "Thay đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
 //                        edPassOld.setText("");
 //                        edPassChange.setText("");
@@ -73,6 +62,18 @@ public class frg_doimatkhau extends Fragment {
 //                    } else {
 //                        Toast.makeText(getActivity(), "Thay đổi mật khẩu thất bại", Toast.LENGTH_SHORT).show();
 //                    }
+
+                    admin admin = addao.getID(user);
+                    admin.setMatKhau(edPassChange.getText().toString());
+
+                    if (addao.updatePass(admin) > 0) {
+                        Toast.makeText(getActivity(), "Thay đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
+                        edPassOld.setText("");
+                        edPassChange.setText("");
+                        edRePassChange.setText("");
+                    } else {
+                        Toast.makeText(getActivity(), "Thay đổi mật khẩu thất bại", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

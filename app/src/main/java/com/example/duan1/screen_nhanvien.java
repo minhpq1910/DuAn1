@@ -109,7 +109,7 @@ public class screen_nhanvien extends AppCompatActivity {
         TextView tvUser = headerView.findViewById(R.id.NameUser);
         // lấy tên người dùng từ Intent
         Intent i = getIntent();
-        String tennv = i.getStringExtra("MaNV");
+        String tennv = i.getStringExtra("NV");
         nvDao = new nhanVienDao(this);
         nhanVien nvien = nvDao.getID(tennv);
         String username = nvien.getHoTen();

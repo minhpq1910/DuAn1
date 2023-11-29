@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         TextView tvUser = headerView.findViewById(R.id.NameUser);
         // lấy tên người dùng từ Intent
         Intent i = getIntent();
-        String tenad = i.getStringExtra("MaNV");
+        String tenad = i.getStringExtra("ADMIN");
         aDao = new adminDao(this);
         admin ad = aDao.getID(tenad);
         String username = ad.getHoTen();

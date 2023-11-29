@@ -20,7 +20,7 @@
         android:text="SmartShop"
         android:textStyle="bold"
         android:textSize="30dp"
-        android:textColor="#E91E4D"
+        android:textColor="#F44336"
         android:fontFamily="sans-serif"
         android:layout_marginTop="30dp"/>
 

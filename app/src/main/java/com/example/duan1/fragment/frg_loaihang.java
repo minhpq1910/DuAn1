@@ -150,7 +150,7 @@ public class frg_loaihang extends Fragment {
     }
 
     public void checkAn() {
-        SharedPreferences pref = getActivity().getSharedPreferences("User_File", Context.MODE_PRIVATE);
+        SharedPreferences pref = getActivity().getSharedPreferences("LoaiTK_File", Context.MODE_PRIVATE);
         String loaiTaiKhoan = pref.getString("LoaiTaiKhoan", "");
         Log.d("LoaiTaiKhoan", loaiTaiKhoan);
         if ("admin".equals(loaiTaiKhoan)) {

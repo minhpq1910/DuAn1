@@ -70,17 +70,19 @@ public class login extends AppCompatActivity {
             int adminLoginResult = aDao.checkLogin(user, pass);
             if (nvLoginResult == 1) {
                 Toast.makeText(this, "Login thành công vào tài khoản nhân viên", Toast.LENGTH_SHORT).show();
-                rememberUser(user, pass, chkSave.isChecked(), "nhanvien");
+                rememberUser(user, pass, chkSave.isChecked());
+                checkTK("nhanvien");
                 Intent i = new Intent(login.this, screen_nhanvien.class);
-                i.putExtra("MaNV", user);
+                i.putExtra("NV", user);
                 i.putExtra("LoaiTK", "nhanvien"); // Truyền loại tài khoản
                 startActivity(i);
                 finish();
             } else if (adminLoginResult == 1) {
                 Toast.makeText(this, "Login thành công vào tài khoản admin", Toast.LENGTH_SHORT).show();
-                rememberUser(user, pass, chkSave.isChecked(), "admin");
+                rememberUser(user, pass, chkSave.isChecked());
+                checkTK("admin");
                 Intent i = new Intent(login.this, MainActivity.class);
-                i.putExtra("MaNV", user);
+                i.putExtra("ADMIN", user);
                 i.putExtra("LoaiTK", "admin"); // Truyền loại tài khoản
                 startActivity(i);
                 finish();
@@ -91,7 +93,7 @@ public class login extends AppCompatActivity {
         }
     }
 
-    private void rememberUser(String u, String p, boolean status, String loaiTaiKhoan) {
+    private void rememberUser(String u, String p, boolean status) {
         SharedPreferences pref = getSharedPreferences("User_File", MODE_PRIVATE);
         SharedPreferences.Editor edit = pref.edit();
         if (!status) {
@@ -101,9 +103,15 @@ public class login extends AppCompatActivity {
             edit.putString("Username", u);
             edit.putString("Password", p);
             edit.putBoolean("Remember", status);
-            edit.putString("LoaiTaiKhoan", loaiTaiKhoan); // Lưu loại tài khoản
         }
         //lưu lại toàn bộ
+        edit.commit();
+    }
+
+    private void checkTK(String loaiTaiKhoan) {
+        SharedPreferences pref = getSharedPreferences("LoaiTK_File", MODE_PRIVATE);
+        SharedPreferences.Editor edit = pref.edit();
+        edit.putString("LoaiTaiKhoan", loaiTaiKhoan); // Lưu loại tài khoản
         edit.commit();
     }
 }

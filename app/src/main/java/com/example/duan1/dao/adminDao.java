@@ -39,7 +39,7 @@ public class adminDao {
 
     public long updatePass(admin obj) {
         ContentValues values = new ContentValues();
-        values.put("HoTen", obj.getHoTen());
+        values.put("hoTen", obj.getHoTen());
         values.put("MatKhau", obj.getMatKhau());
         return db.update("admin", values, "taiKhoan = ?", new String[]{String.valueOf(obj.getTaiKhoan())});
     }

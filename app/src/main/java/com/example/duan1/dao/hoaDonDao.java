@@ -36,6 +36,17 @@ public class hoaDonDao {
         return db.insert("HoaDon", null, values);
     }
 
+    public long update(hoadon obj) {
+        ContentValues values = new ContentValues();
+        values.put("MaSP", obj.getMaSP());
+        values.put("MaNV", obj.getMaNV());
+        values.put("SL", obj.getSL());
+        values.put("Gia", obj.getGia());
+        values.put("TrangThai", obj.getTrangThai());
+        values.put("Ngay", sdf.format(obj.getNgay()));
+        return db.update("HoaDon", values, "MaHD = ?", new String[]{String.valueOf(obj.getMaHD())});
+    }
+
     public long delete(String id) {
         return db.delete("HoaDon", "MaHD = ?", new String[]{String.valueOf(id)});
     }
