@@ -22,6 +22,7 @@ import com.example.duan1.dao.adminDao;
 import com.example.duan1.fragment.frg_addNv;
 import com.example.duan1.fragment.frg_doanhthu;
 import com.example.duan1.fragment.frg_doimatkhau;
+import com.example.duan1.fragment.frg_doimatkhauad;
 import com.example.duan1.fragment.frg_hoadon;
 import com.example.duan1.fragment.frg_loaihang;
 import com.example.duan1.fragment.frg_nhanvien;
@@ -77,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
                     relaceFrg(frgTNV);
                     toolbar.setTitle("Thêm nhân viên");
                 } else if (item.getItemId() == R.id.menuDMK) {
-                    frg_doimatkhau frgDMK = new frg_doimatkhau();
-                    relaceFrg(frgDMK);
+                    frg_doimatkhauad frgDMKAD = new frg_doimatkhauad();
+                    relaceFrg(frgDMKAD);
                     toolbar.setTitle("Đổi mật khẩu");
                 } else if (item.getItemId() == R.id.menuDX) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
