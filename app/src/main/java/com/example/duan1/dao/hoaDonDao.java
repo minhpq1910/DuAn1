@@ -5,14 +5,19 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.duan1.database.Dbhelper;
 import com.example.duan1.model.hoadon;
+import com.example.duan1.model.sanpham;
+import com.example.duan1.model.top10;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class hoaDonDao {
     private SQLiteDatabase db;
@@ -28,7 +33,7 @@ public class hoaDonDao {
     public long insert(hoadon obj) {
         ContentValues values = new ContentValues();
         values.put("MaSP", obj.getMaSP());
-        values.put("MaNV", obj.getMaNV());
+        values.put("taiKhoan", obj.getMaNV());
         values.put("SL", obj.getSL());
         values.put("Gia", obj.getGia());
         values.put("TrangThai", obj.getTrangThai());
@@ -39,7 +44,7 @@ public class hoaDonDao {
     public long update(hoadon obj) {
         ContentValues values = new ContentValues();
         values.put("MaSP", obj.getMaSP());
-        values.put("MaNV", obj.getMaNV());
+        values.put("taiKhoan", obj.getMaNV());
         values.put("SL", obj.getSL());
         values.put("Gia", obj.getGia());
         values.put("TrangThai", obj.getTrangThai());
@@ -70,7 +75,7 @@ public class hoaDonDao {
             hoadon obj = new hoadon();
             obj.setMaHD(Integer.parseInt(cursor.getString(cursor.getColumnIndex("MaHD"))));
             obj.setMaSP(Integer.parseInt(cursor.getString(cursor.getColumnIndex("MaSP"))));
-            obj.setMaNV(cursor.getString(cursor.getColumnIndex("MaNV")));
+            obj.setMaNV(cursor.getString(cursor.getColumnIndex("taiKhoan")));
             obj.setSL(Integer.parseInt(cursor.getString(cursor.getColumnIndex("SL"))));
             obj.setGia(Integer.parseInt(cursor.getString(cursor.getColumnIndex("Gia"))));
             obj.setTrangThai(Integer.parseInt(cursor.getString(cursor.getColumnIndex("TrangThai"))));
@@ -85,39 +90,63 @@ public class hoaDonDao {
         }
         return list;
     }
-//    // thống kê top 10
-//    @SuppressLint("Range")
-//    public List<Top> getTop() {
-//        String sqlTop = "SELECT maSach,count(maSach) as soLuong FROM PhieuMuon GROUP BY maSach ORDER BY soLuong DESC LIMIT 10";
-//        List<Top> list = new ArrayList<Top>();
-//        SachDAO sachDAO = new SachDAO(context);
-//        Cursor cursor = db.rawQuery(sqlTop, null);
-//        while (cursor.moveToNext()) {
-//            Top top = new Top();
-//            @SuppressLint("Range") Sach sach = sachDAO.getID(cursor.getString(cursor.getColumnIndex("maSach")));
-//            top.setTenSach(sach.getTenSach());
-//            top.setSoLuong(Integer.parseInt(cursor.getString(cursor.getColumnIndex("soLuong"))));
-//            list.add(top);
-//
-//        }
-//        return list;
-//    }
+     //thống kê top 10
+     public List<top10> getTop10BestSellingProducts() {
+         String sql = "SELECT SanPham.TenSP, SUM(HoaDon.SL) AS TotalSold " +
+                 "FROM HoaDon " +
+                 "INNER JOIN SanPham ON HoaDon.MaSP = SanPham.MaSP " +
+                 "WHERE HoaDon.TrangThai = 1 " +
+                 "GROUP BY SanPham.TenSP " +
+                 "ORDER BY TotalSold DESC " +
+                 "LIMIT 10";
+
+         return getTop10Data(sql);
+     }
+
+    @SuppressLint("Range")
+    private List<top10> getTop10Data(String sql, String... selectionArgs) {
+        List<top10> list = new ArrayList<>();
+        Cursor cursor = db.rawQuery(sql, selectionArgs);
+        while (cursor.moveToNext()) {
+            top10 obj = new top10();
+            obj.setTenSP(cursor.getString(cursor.getColumnIndex("TenSP")));
+            obj.setSL(cursor.getInt(cursor.getColumnIndex("TotalSold")));
+            list.add(obj);
+        }
+        return list;
+    }
 
     // thống kê doanh thu
     @SuppressLint("Range")
     public int getDoanhThu(String tuNgay, String denNgay) {
-        String sqlDoanhThu = "SELECT SUM(gia) as doanhThu FROM HoaDon WHERE ngay BETWEEN ? AND ?";
-        List<Integer> list = new ArrayList<Integer>();
-        Cursor cursor = db.rawQuery(sqlDoanhThu, new String[]{tuNgay, denNgay});
-        while (cursor.moveToNext()) {
-            try {
-                list.add(Integer.parseInt(cursor.getString(cursor.getColumnIndex("doanhThu"))));
+        String sqlDoanhThu = "SELECT SUM(gia * SL) AS doanhThu FROM HoaDon WHERE TrangThai = 1 AND ngay BETWEEN ? AND ?";
 
-            } catch (Exception e) {
-                list.add(0);
+        try (Cursor cursor = db.rawQuery(sqlDoanhThu, new String[]{tuNgay, denNgay})) {
+            if (cursor.moveToFirst()) {
+                return cursor.getInt(cursor.getColumnIndex("doanhThu"));
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return list.get(0);
+
+        return 0;
+    }
+
+    @SuppressLint("Range")
+    public int getDoanhThuForUser(String user, String tuNgay, String denNgay) {
+        String sqlDoanhThu = "SELECT SUM(SanPham.Gia * HoaDon.SL) AS doanhThu FROM HoaDon INNER JOIN SanPham ON HoaDon.MaSP = SanPham.MaSP WHERE taiKhoan = ? AND TrangThai = 1 AND ngay BETWEEN ? AND ?";
+
+        try (Cursor cursor = db.rawQuery(sqlDoanhThu, new String[]{user, tuNgay, denNgay})) {
+            if (cursor.moveToFirst()) {
+                int doanhThu = cursor.getInt(cursor.getColumnIndex("doanhThu"));
+                return doanhThu;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Log.d("DEBUG", "Doanh Thu: 0");
+        return 0;
     }
 }
 

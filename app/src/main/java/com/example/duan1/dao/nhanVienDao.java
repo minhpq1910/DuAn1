@@ -85,7 +85,6 @@ public class nhanVienDao {
                 return null; // Trả về null nếu "MatKhau" không phải là một cột hợp lệ
             }
         }
-
         return null; // Trả về null nếu không tìm thấy tài khoản phù hợp hoặc cursor không có dữ liệu
     }
 

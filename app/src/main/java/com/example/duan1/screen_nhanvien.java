@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.duan1.adapter.hoaDonAdapter;
 import com.example.duan1.dao.nhanVienDao;
 import com.example.duan1.fragment.frg_doanhthu;
 import com.example.duan1.fragment.frg_doimatkhau;
@@ -32,6 +33,7 @@ public class screen_nhanvien extends AppCompatActivity {
     Toolbar toolbar_nv;
     NavigationView navigationView_nv;
     DrawerLayout drawerLayout_nv;
+    hoaDonAdapter adapter;
     nhanVienDao nvDao;
     Context context = this;
 
@@ -51,7 +53,9 @@ public class screen_nhanvien extends AppCompatActivity {
         toggle.syncState();
         NavigationUser();
 
-
+        //lấy thông tin người đăng nhập
+        String userName = getIntent().getStringExtra("NV");
+        frg_doanhthu.setUserInfo(userName);
 
 
         navigationView_nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -86,12 +90,11 @@ public class screen_nhanvien extends AppCompatActivity {
                     });
                     builder.setNegativeButton("Hủy", null);
                     builder.create().show();
-                } else if (item.getItemId() == R.id.menuDT_nv) {
+                } else if (item.getItemId() == R.id.menuDT) {
                     frg_doanhthu frgDT = new frg_doanhthu();
                     relaceFrg(frgDT);
                     toolbar_nv.setTitle("Doanh thu");
                 }
-
 
                 drawerLayout_nv.closeDrawer(navigationView_nv);
                 return true;

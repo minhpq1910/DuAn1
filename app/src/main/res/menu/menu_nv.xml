@@ -14,7 +14,7 @@
             <!--            <item android:id="@+id/menuTop"-->
             <!--                android:title="Top 10 sách mượn nhiều nhất"-->
             <!--                android:icon="@drawable/top10"/>-->
-            <item android:id="@+id/menuDT_nv"
+            <item android:id="@+id/menuDT"
                 android:title="Doanh thu"
                 android:icon="@drawable/revenue"/>
         </menu>

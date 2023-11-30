@@ -7,11 +7,11 @@ public class hoadon {
     private String MaNV;
     private int SL, Gia, TrangThai;
     private Date ngay;
-
+    private String HoTenNV;
     public hoadon() {
     }
 
-    public hoadon(int maHD, int maSP, String maNV, int SL, int gia, int trangThai, Date ngay) {
+    public hoadon(int maHD, int maSP, String maNV, int SL, int gia, int trangThai, Date ngay, String hoTenNV) {
         MaHD = maHD;
         MaSP = maSP;
         MaNV = maNV;
@@ -19,6 +19,7 @@ public class hoadon {
         Gia = gia;
         TrangThai = trangThai;
         this.ngay = ngay;
+        HoTenNV = hoTenNV;
     }
 
     public int getMaHD() {
@@ -75,5 +76,13 @@ public class hoadon {
 
     public void setNgay(Date ngay) {
         this.ngay = ngay;
+    }
+
+    public String getHoTenNV() {
+        return HoTenNV;
+    }
+
+    public void setHoTenNV(String hoTenNV) {
+        HoTenNV = hoTenNV;
     }
 }

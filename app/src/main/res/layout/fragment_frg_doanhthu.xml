@@ -10,57 +10,102 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:orientation="horizontal">
+        android:background="#28CDDC39"
+        android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Từ ngày: "
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edTuNgay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:hint="YYYY//MM//DD"
+                android:textSize="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đến ngày: "
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edDenNgay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="YYYY//MM//DD"
+                android:textSize="15dp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnDoanhThu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Từ ngày: "
-            android:textSize="15dp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/edTuNgay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="YYYY//MM//DD"
-            android:layout_marginRight="20dp"
-            android:textSize="15dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Đến ngày: "
-            android:textSize="15dp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/edDenNgay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="YYYY//MM//DD"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/green_A400"
+            android:text="Áp dụng"
             android:textSize="15dp" />
     </LinearLayout>
 
     <Button
-        android:id="@+id/btnDoanhThu"
+        android:id="@+id/btnhomnay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:text="Tính"
+        android:text="Hôm nay"
         android:textSize="20dp" />
 
     <TextView
-        android:id="@+id/tvDoanhThu"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:text="Doanh thu:"
+        android:text="Doanh thu"
         android:textColor="@color/black"
-        android:textSize="30dp"
+        android:textSize="25dp"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/tvDoanhThu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text=""
+        android:textColor="@color/green_A400"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Sản phẩm bán chạy"-->
+<!--        android:textSize="20dp" />-->
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical">-->
+
+<!--        <ListView-->
+<!--            android:id="@+id/lvTop"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent" />-->
+<!--    </LinearLayout>-->
 
 </LinearLayout>
