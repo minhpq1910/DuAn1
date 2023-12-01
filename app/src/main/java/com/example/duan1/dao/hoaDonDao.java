@@ -90,18 +90,19 @@ public class hoaDonDao {
         }
         return list;
     }
-     //thống kê top 10
-     public List<top10> getTop10BestSellingProducts() {
-         String sql = "SELECT SanPham.TenSP, SUM(HoaDon.SL) AS TotalSold " +
-                 "FROM HoaDon " +
-                 "INNER JOIN SanPham ON HoaDon.MaSP = SanPham.MaSP " +
-                 "WHERE HoaDon.TrangThai = 1 " +
-                 "GROUP BY SanPham.TenSP " +
-                 "ORDER BY TotalSold DESC " +
-                 "LIMIT 10";
 
-         return getTop10Data(sql);
-     }
+    //thống kê top 10
+    public List<top10> getTop10BestSellingProducts() {
+        String sql = "SELECT SanPham.TenSP, SUM(HoaDon.SL) AS TotalSold " +
+                "FROM HoaDon " +
+                "INNER JOIN SanPham ON HoaDon.MaSP = SanPham.MaSP " +
+                "WHERE HoaDon.TrangThai = 1 " +
+                "GROUP BY SanPham.TenSP " +
+                "ORDER BY TotalSold DESC " +
+                "LIMIT 10";
+
+        return getTop10Data(sql);
+    }
 
     @SuppressLint("Range")
     private List<top10> getTop10Data(String sql, String... selectionArgs) {
@@ -144,7 +145,6 @@ public class hoaDonDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         Log.d("DEBUG", "Doanh Thu: 0");
         return 0;
     }

@@ -34,10 +34,7 @@ public class frg_doanhthu extends Fragment {
     Button btnDoanhThu, btnhomnay;
     EditText edTuNgay, edDenNgay;
     TextView tvDoanhThu;
-    ListView lvTop;
-    ArrayList<top10> list;
-    topAdapter adapter;
-    hoaDonDao dao;
+
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
     int mYear, mMonth, mDay;
     private static String currentUser;
@@ -60,12 +57,7 @@ public class frg_doanhthu extends Fragment {
         tvDoanhThu = v.findViewById(R.id.tvDoanhThu);
         btnDoanhThu = v.findViewById(R.id.btnDoanhThu);
         btnhomnay = v.findViewById(R.id.btnhomnay);
-//        lvTop = v.findViewById(R.id.lvTop);
-
-//        dao  = new hoaDonDao(getActivity());
-//        list = (ArrayList<top10>) dao.getTop10BestSellingProducts();
-//        adapter = new topAdapter(getActivity(),this,list);
-//        lvTop.setAdapter(adapter);
+        ;
         edTuNgay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,7 +120,7 @@ public class frg_doanhthu extends Fragment {
                 public void onClick(View v) {
                     hoaDonDao hoaDonDao = new hoaDonDao(getActivity());
                     int todayRevenue = hoaDonDao.getDoanhThuForUser(currentUser, sdf.format(new Date()), sdf.format(new Date()));
-                    tvDoanhThu.setText( todayRevenue + " VND");
+                    tvDoanhThu.setText(todayRevenue + " VND");
                 }
             });
         } else {
@@ -137,7 +129,7 @@ public class frg_doanhthu extends Fragment {
                 public void onClick(View v) {
                     hoaDonDao hoaDonDao = new hoaDonDao(getActivity());
                     int todayRevenue = hoaDonDao.getDoanhThu(sdf.format(new Date()), sdf.format(new Date()));
-                    tvDoanhThu.setText( todayRevenue + " VND");
+                    tvDoanhThu.setText(todayRevenue + " VND");
                 }
             });
         }
@@ -155,7 +147,7 @@ public class frg_doanhthu extends Fragment {
                     String denNgay = edDenNgay.getText().toString();
                     hoaDonDao hoaDonDao = new hoaDonDao(getActivity());
                     int doanhThu = hoaDonDao.getDoanhThuForUser(currentUser, tuNgay, denNgay);
-                    tvDoanhThu.setText( doanhThu + " VND");
+                    tvDoanhThu.setText(doanhThu + " VND");
 
                 }
             });
@@ -169,7 +161,7 @@ public class frg_doanhthu extends Fragment {
 
                     int doanhThu = hoaDonDao.getDoanhThu(tuNgay, denNgay);
 //                    Log.d("DEBUG", "onClick - Doanh Thu: " + doanhThu);
-                    tvDoanhThu.setText( doanhThu + " VND");
+                    tvDoanhThu.setText(doanhThu + " VND");
                 }
             });
         }

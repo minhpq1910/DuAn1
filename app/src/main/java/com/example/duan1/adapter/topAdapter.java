@@ -13,17 +13,18 @@ import androidx.annotation.Nullable;
 
 import com.example.duan1.R;
 import com.example.duan1.fragment.frg_doanhthu;
+import com.example.duan1.fragment.frg_top;
 import com.example.duan1.model.top10;
 
 import java.util.ArrayList;
 
 public class topAdapter extends ArrayAdapter<top10> {
     private Context context;
-    frg_doanhthu fragment;
+    frg_top fragment;
     ArrayList<top10> list;
     TextView tvtopSP,tvtopSL;
     ImageView imgDel;
-    public topAdapter(@NonNull Context context, frg_doanhthu fragment, ArrayList<top10> list) {
+    public topAdapter(@NonNull Context context, frg_top fragment, ArrayList<top10> list) {
         super(context, 0,list);
         this.context = context;
         this.fragment = fragment;
@@ -43,7 +44,7 @@ public class topAdapter extends ArrayAdapter<top10> {
             tvtopSP = v.findViewById(R.id.tvtopSP);
             tvtopSP.setText(""+item.getTenSP());
             tvtopSL = v.findViewById(R.id.tvtopSL);
-            tvtopSL.setText(""+item.getSL());
+            tvtopSL.setText("x"+item.getSL());
         }
         return v;
     }

@@ -91,21 +91,4 @@
         android:textSize="25dp"
         android:textStyle="bold" />
 
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Sản phẩm bán chạy"-->
-<!--        android:textSize="20dp" />-->
-
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="vertical">-->
-
-<!--        <ListView-->
-<!--            android:id="@+id/lvTop"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent" />-->
-<!--    </LinearLayout>-->
-
 </LinearLayout>

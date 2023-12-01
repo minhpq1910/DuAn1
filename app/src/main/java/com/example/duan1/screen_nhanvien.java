@@ -26,6 +26,7 @@ import com.example.duan1.fragment.frg_doimatkhau;
 import com.example.duan1.fragment.frg_hoadon;
 import com.example.duan1.fragment.frg_loaihang;
 import com.example.duan1.fragment.frg_sanpham;
+import com.example.duan1.fragment.frg_top;
 import com.example.duan1.model.nhanVien;
 import com.google.android.material.navigation.NavigationView;
 
@@ -90,6 +91,10 @@ public class screen_nhanvien extends AppCompatActivity {
                     });
                     builder.setNegativeButton("Hủy", null);
                     builder.create().show();
+                } else if (item.getItemId() == R.id.menuTop) {
+                    frg_top frtop = new frg_top();
+                    relaceFrg(frtop);
+                    toolbar_nv.setTitle("Top 10 sản phẩm bán chạy nhất");
                 } else if (item.getItemId() == R.id.menuDT) {
                     frg_doanhthu frgDT = new frg_doanhthu();
                     relaceFrg(frgDT);

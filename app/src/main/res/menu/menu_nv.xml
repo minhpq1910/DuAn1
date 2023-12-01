@@ -1,32 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menuQLHD_nv"
-        android:title="Quản lý hoá đơn"
-        android:icon="@drawable/hoadon"/>
-    <item android:id="@+id/menuQLLH_nv"
-        android:title="Quản lý loại hàng"
-        android:icon="@drawable/loaihang"/>
-    <item android:id="@+id/menuQLSP_nv"
-        android:title="Quản lý sản phẩm"
-        android:icon="@drawable/sanpham"/>
+    <item
+        android:id="@+id/menuQLHD_nv"
+        android:icon="@drawable/hoadon"
+        android:title="Quản lý hoá đơn" />
+    <item
+        android:id="@+id/menuQLLH_nv"
+        android:icon="@drawable/loaihang"
+        android:title="Quản lý loại hàng" />
+    <item
+        android:id="@+id/menuQLSP_nv"
+        android:icon="@drawable/sanpham"
+        android:title="Quản lý sản phẩm" />
     <item android:title="Thống kê">
         <menu>
-            <!--            <item android:id="@+id/menuTop"-->
-            <!--                android:title="Top 10 sách mượn nhiều nhất"-->
-            <!--                android:icon="@drawable/top10"/>-->
-            <item android:id="@+id/menuDT"
-                android:title="Doanh thu"
-                android:icon="@drawable/revenue"/>
+            <item
+                android:id="@+id/menuTop"
+                android:icon="@drawable/ic_top"
+                android:title="Top 10 sản phẩm bán chạy nhất" />
+            <item
+                android:id="@+id/menuDT"
+                android:icon="@drawable/revenue"
+                android:title="Doanh thu" />
         </menu>
     </item>
     <item android:title="Người dùng">
         <menu>
-            <item android:id="@+id/menuDMK_nv"
-                android:title="Đổi mật khẩu"
-                android:icon="@drawable/change_password"/>
-            <item android:id="@+id/menuDX_nv"
-                android:title="Đăng xuất"
-                android:icon="@drawable/log_out"/>
+            <item
+                android:id="@+id/menuDMK_nv"
+                android:icon="@drawable/change_password"
+                android:title="Đổi mật khẩu" />
+            <item
+                android:id="@+id/menuDX_nv"
+                android:icon="@drawable/log_out"
+                android:title="Đăng xuất" />
         </menu>
     </item>
 </menu>
