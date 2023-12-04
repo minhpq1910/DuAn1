@@ -4,11 +4,13 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,9 +27,11 @@ import com.example.duan1.R;
 import com.example.duan1.adapter.hoaDonAdapter;
 import com.example.duan1.adapter.nhanVienSpinnerAdapter;
 import com.example.duan1.adapter.sanPhamSpinnerAdapter;
+import com.example.duan1.dao.adminDao;
 import com.example.duan1.dao.hoaDonDao;
 import com.example.duan1.dao.nhanVienDao;
 import com.example.duan1.dao.sanPhamDao;
+import com.example.duan1.model.admin;
 import com.example.duan1.model.hoadon;
 import com.example.duan1.model.nhanVien;
 import com.example.duan1.model.sanpham;
@@ -46,27 +50,34 @@ public class frg_hoadon extends Fragment {
     FloatingActionButton fab;
     Dialog dialog;
     EditText edMaHD;
-    Spinner spNV, spSP;
+    Spinner spSP;
     EditText edSL;
-    TextView tvNgay, tvGia;
+    TextView tvNgay, tvGia, tvUser, tvTao;
     CheckBox chkTrangThai;
     Button btnSave, btnCancel;
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-    nhanVienSpinnerAdapter nvSpinAdapter;
-    ArrayList<nhanVien> listNVien;
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     nhanVienDao nvDAO;
+    adminDao aDao;
     String maNVien;
     sanPhamSpinnerAdapter spSpinAdapter;
     ArrayList<sanpham> listSP;
     sanPhamDao spDAO;
     sanpham sp;
     int maSP, Gia;
-    int positionNV, positionSP;
+    int positionSP;
+    private static String tennv, tenad;
 
     public frg_hoadon() {
         // Required empty public constructor
     }
 
+    public static void setAd(String user) {
+        tenad = user;
+    }
+
+    public static void setUser(String user) {
+        tennv = user;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -75,6 +86,8 @@ public class frg_hoadon extends Fragment {
         lvHD = v.findViewById(R.id.lvHoaDon);
         fab = v.findViewById(R.id.fab);
         dao = new hoaDonDao(getActivity());
+
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,36 +116,40 @@ public class frg_hoadon extends Fragment {
         dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_hoadon);
         edMaHD = dialog.findViewById(R.id.edMaHD);
-        spNV = dialog.findViewById(R.id.spMaNV);
+        tvUser = dialog.findViewById(R.id.tvUser);
         spSP = dialog.findViewById(R.id.spMaSP);
         tvNgay = dialog.findViewById(R.id.tvNgay);
+        tvTao = dialog.findViewById(R.id.tvTao);
         edSL = dialog.findViewById(R.id.edSL);
         tvGia = dialog.findViewById(R.id.tvGiaSP);
         chkTrangThai = dialog.findViewById(R.id.chkTrangThai);
         btnCancel = dialog.findViewById(R.id.btnCancelHD);
         btnSave = dialog.findViewById(R.id.btnSaveHD);
 
+
+        SharedPreferences pref = getActivity().getSharedPreferences("LoaiTK_File", Context.MODE_PRIVATE);
+        String loaiTaiKhoan = pref.getString("LoaiTaiKhoan", "");
+        Log.d("hoadon", loaiTaiKhoan);
+
+
+        String username;
+        if ("nhanvien".equals(loaiTaiKhoan)) {
+            nvDAO = new nhanVienDao(getContext());
+            nhanVien nvien = nvDAO.getID(tennv);
+            username = nvien.getHoTen();
+
+        } else {
+            aDao = new adminDao(getContext());
+            admin ad = aDao.getID(tenad);
+            username = ad.getHoTen();
+        }
+
+
+        tvTao.setVisibility(View.GONE);
+        tvUser.setVisibility(View.GONE);
         edMaHD.setEnabled(false);
-        nvDAO = new nhanVienDao(context);
-        listNVien = new ArrayList<nhanVien>();
-        listNVien = (ArrayList<nhanVien>) nvDAO.getAll();
-        nvSpinAdapter = new nhanVienSpinnerAdapter(context, listNVien);
         // set ngày
         tvNgay.setText("Ngày: " + sdf.format(new Date()));
-        spNV.setAdapter(nvSpinAdapter);
-        spNV.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                maNVien = listNVien.get(position).getTaiKhoan();
-//                Toast.makeText(context, "Chọn: "+listThanhVien.get(position).getHoTen(), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
         spDAO = new sanPhamDao(context);
         listSP = new ArrayList<sanpham>();
         listSP = (ArrayList<sanpham>) spDAO.getAll();
@@ -145,7 +162,6 @@ public class frg_hoadon extends Fragment {
                 maSP = listSP.get(position).getMaSP();
                 Gia = listSP.get(position).getGia();
                 tvGia.setText("Giá: " + Gia);
-//                Toast.makeText(context, "Chọn: "+listSach.get(position).getTenSach(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -157,17 +173,13 @@ public class frg_hoadon extends Fragment {
         // edit
         if (type != 0) {
             edMaHD.setText(String.valueOf(item.getMaHD()));
-            for (int i = 0; i < listNVien.size(); i++)
-                if (item.getMaNV() == (listNVien.get(i).getTaiKhoan())) {
-                    positionNV = i;
-                }
-            spNV.setSelection(positionNV);
-
             for (int i = 0; i < listSP.size(); i++)
                 if (item.getMaSP() == (listSP.get(i).getMaSP())) {
                     positionSP = i;
                 }
             spSP.setSelection(positionSP);
+
+            tvUser.setText(username);
 
             tvNgay.setText("Ngày thuê: " + sdf.format(item.getNgay()));
             edSL.setText("" + item.getSL());
@@ -179,14 +191,14 @@ public class frg_hoadon extends Fragment {
             }
 
             if (item.getTrangThai() == 0) {
-                spNV.setEnabled(true);
+                tvUser.setEnabled(true);
                 spSP.setEnabled(true);
                 edSL.setEnabled(true);
                 chkTrangThai.setEnabled(true);
                 btnSave.setEnabled(true);
             } else {
                 // Vô hiệu hóa nếu trạng thái không phải là 0
-                spNV.setEnabled(false);
+                tvUser.setEnabled(false);
                 spSP.setEnabled(false);
                 edSL.setEnabled(false);
                 chkTrangThai.setEnabled(false);
@@ -205,7 +217,9 @@ public class frg_hoadon extends Fragment {
             public void onClick(View v) {
                 item = new hoadon();
                 item.setMaSP(maSP);
-                item.setMaNV(String.valueOf(maNVien));
+
+                item.setHoTenNV(username);
+
                 item.setNgay(new Date());
                 item.setGia(Gia);
                 item.setSL(parseInt(edSL.getText().toString(), 0));
@@ -295,5 +309,10 @@ public class frg_hoadon extends Fragment {
         });
         AlertDialog alert = builder.create();
         builder.show();
+    }
+
+    public void checkAn() {
+
+
     }
 }

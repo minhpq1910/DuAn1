@@ -22,7 +22,7 @@ import java.util.Locale;
 public class hoaDonDao {
     private SQLiteDatabase db;
     private Context context;
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     public hoaDonDao(Context context) {
         this.context = context;
@@ -33,7 +33,7 @@ public class hoaDonDao {
     public long insert(hoadon obj) {
         ContentValues values = new ContentValues();
         values.put("MaSP", obj.getMaSP());
-        values.put("taiKhoan", obj.getMaNV());
+        values.put("HoTen", obj.getHoTenNV());
         values.put("SL", obj.getSL());
         values.put("Gia", obj.getGia());
         values.put("TrangThai", obj.getTrangThai());
@@ -44,7 +44,7 @@ public class hoaDonDao {
     public long update(hoadon obj) {
         ContentValues values = new ContentValues();
         values.put("MaSP", obj.getMaSP());
-        values.put("taiKhoan", obj.getMaNV());
+        values.put("HoTen", obj.getHoTenNV());
         values.put("SL", obj.getSL());
         values.put("Gia", obj.getGia());
         values.put("TrangThai", obj.getTrangThai());
@@ -75,7 +75,7 @@ public class hoaDonDao {
             hoadon obj = new hoadon();
             obj.setMaHD(Integer.parseInt(cursor.getString(cursor.getColumnIndex("MaHD"))));
             obj.setMaSP(Integer.parseInt(cursor.getString(cursor.getColumnIndex("MaSP"))));
-            obj.setMaNV(cursor.getString(cursor.getColumnIndex("taiKhoan")));
+            obj.setHoTenNV(cursor.getString(cursor.getColumnIndex("HoTen")));
             obj.setSL(Integer.parseInt(cursor.getString(cursor.getColumnIndex("SL"))));
             obj.setGia(Integer.parseInt(cursor.getString(cursor.getColumnIndex("Gia"))));
             obj.setTrangThai(Integer.parseInt(cursor.getString(cursor.getColumnIndex("TrangThai"))));
@@ -90,6 +90,34 @@ public class hoaDonDao {
         }
         return list;
     }
+
+    public List<top10> getProducts(String tuNgay, String denNgay) {
+        String sql = "SELECT SanPham.TenSP, SUM(HoaDon.SL) AS TotalSold " +
+                "FROM HoaDon " +
+                "INNER JOIN SanPham ON HoaDon.MaSP = SanPham.MaSP " +
+                "WHERE HoaDon.TrangThai = 1 " +
+                "AND HoaDon.Ngay BETWEEN ? AND ? " +
+                "GROUP BY SanPham.TenSP " +
+                "ORDER BY TotalSold DESC " +
+                "LIMIT 10";
+
+        return getTop10Data(sql, tuNgay, denNgay);
+    }
+
+    public List<top10> getProductsUser(String user, String tuNgay, String denNgay) {
+        String sql = "SELECT SanPham.TenSP, SUM(HoaDon.SL) AS TotalSold " +
+                "FROM HoaDon " +
+                "INNER JOIN SanPham ON HoaDon.MaSP = SanPham.MaSP " +
+                "WHERE HoaDon.TrangThai = 1 " +
+                "AND HoaDon.Ngay BETWEEN ? AND ? " +
+                "AND HoaDon.HoTen = ? " +
+                "GROUP BY SanPham.TenSP " +
+                "ORDER BY TotalSold DESC " +
+                "LIMIT 10";
+
+        return getTop10Data(sql, tuNgay, denNgay, user);
+    }
+
 
     //thống kê top 10
     public List<top10> getTop10BestSellingProducts() {
@@ -120,7 +148,7 @@ public class hoaDonDao {
     // thống kê doanh thu
     @SuppressLint("Range")
     public int getDoanhThu(String tuNgay, String denNgay) {
-        String sqlDoanhThu = "SELECT SUM(gia * SL) AS doanhThu FROM HoaDon WHERE TrangThai = 1 AND ngay BETWEEN ? AND ?";
+        String sqlDoanhThu = "SELECT SUM(SanPham.Gia * HoaDon.SL) AS doanhThu FROM HoaDon INNER JOIN SanPham ON HoaDon.MaSP = SanPham.MaSP WHERE TrangThai = 1 AND ngay BETWEEN ? AND ?";
 
         try (Cursor cursor = db.rawQuery(sqlDoanhThu, new String[]{tuNgay, denNgay})) {
             if (cursor.moveToFirst()) {
@@ -135,7 +163,7 @@ public class hoaDonDao {
 
     @SuppressLint("Range")
     public int getDoanhThuForUser(String user, String tuNgay, String denNgay) {
-        String sqlDoanhThu = "SELECT SUM(SanPham.Gia * HoaDon.SL) AS doanhThu FROM HoaDon INNER JOIN SanPham ON HoaDon.MaSP = SanPham.MaSP WHERE taiKhoan = ? AND TrangThai = 1 AND ngay BETWEEN ? AND ?";
+        String sqlDoanhThu = "SELECT SUM(SanPham.Gia * HoaDon.SL) AS doanhThu FROM HoaDon INNER JOIN SanPham ON HoaDon.MaSP = SanPham.MaSP WHERE HoTen = ? AND TrangThai = 1 AND ngay BETWEEN ? AND ?";
 
         try (Cursor cursor = db.rawQuery(sqlDoanhThu, new String[]{user, tuNgay, denNgay})) {
             if (cursor.moveToFirst()) {

@@ -37,7 +37,7 @@ public class sanPhamAdapter extends ArrayAdapter<sanpham> {
     private Context context;
     frg_sanpham fragment;
     List<sanpham> list;
-    TextView tvMaSP, tvTenSP, tvSL, tvGia, tvLoaiSP;
+    TextView tvMaSP, tvTenSP, tvGia, tvLoaiSP;
     ImageView imgDel, AvtSP;
 
     public sanPhamAdapter(@NonNull Context context, frg_sanpham fragment, List<sanpham> list) {
@@ -64,8 +64,6 @@ public class sanPhamAdapter extends ArrayAdapter<sanpham> {
 
             tvTenSP = v.findViewById(R.id.tvTenSP);
             tvTenSP.setText("Tên sản phẩm: " + item.getTenSP());
-            tvSL = v.findViewById(R.id.tvSL);
-            tvSL.setText("Số lượng: " + item.getSL());
             tvGia = v.findViewById(R.id.tvGia);
             tvGia.setText("Giá: " + item.getGia());
             tvLoaiSP = v.findViewById(R.id.tvLoaiSP);

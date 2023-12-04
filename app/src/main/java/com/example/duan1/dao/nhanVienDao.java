@@ -94,8 +94,8 @@ public class nhanVienDao {
         Cursor cursor = db.rawQuery(sql, selectionArgs);
         while (cursor.moveToNext()) {
             nhanVien obj = new nhanVien();
-            obj.setTaiKhoan(cursor.getString(cursor.getColumnIndex("taiKhoan")));
             obj.setHoTen(cursor.getString(cursor.getColumnIndex("HoTen")));
+            obj.setTaiKhoan(cursor.getString(cursor.getColumnIndex("taiKhoan")));
             obj.setMatKhau(cursor.getString(cursor.getColumnIndex("MatKhau")));
             obj.setAvt(cursor.getString(cursor.getColumnIndex("Avt")));
             list.add(obj);

@@ -3,15 +3,14 @@ package com.example.duan1.model;
 public class sanpham {
     private int MaSP;
     private String TenSP;
-    private int SL, Gia, MaLoaiH;
+    private int Gia, MaLoaiH;
     private String urlAvt;
     public sanpham() {
     }
 
-    public sanpham(int maSP, String tenSP, int SL, int gia, int maLoaiH, String urlAvt) {
+    public sanpham(int maSP, String tenSP, int gia, int maLoaiH, String urlAvt) {
         MaSP = maSP;
         TenSP = tenSP;
-        this.SL = SL;
         Gia = gia;
         MaLoaiH = maLoaiH;
         this.urlAvt = urlAvt;
@@ -31,14 +30,6 @@ public class sanpham {
 
     public void setTenSP(String tenSP) {
         TenSP = tenSP;
-    }
-
-    public int getSL() {
-        return SL;
-    }
-
-    public void setSL(int SL) {
-        this.SL = SL;
     }
 
     public int getGia() {

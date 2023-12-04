@@ -33,7 +33,7 @@ public class hoaDonAdapter extends ArrayAdapter<hoadon> {
     ImageView imgDel;
     sanPhamDao spDao;
     nhanVienDao nvDao;
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     public hoaDonAdapter(@NonNull Context context, frg_hoadon fragment, ArrayList<hoadon> list) {
         super(context, 0, list);
@@ -58,10 +58,11 @@ public class hoaDonAdapter extends ArrayAdapter<hoadon> {
             sanpham sp = spDao.getID(String.valueOf(item.getMaSP()));
             tv_SP = v.findViewById(R.id.tv_SP);
             tv_SP.setText("Tên sản phẩm: " + sp.getTenSP());
-            nvDao = new nhanVienDao(context);
-            nhanVien nv = nvDao.getID(item.getMaNV());
+
+
             tv_nhanV = v.findViewById(R.id.tv_nhanV);
-            tv_nhanV.setText("Nhân viên: " + nv.getHoTen());
+            tv_nhanV.setText(item.getHoTenNV());
+
             tv_SL = v.findViewById(R.id.tv_SL);
             tv_SL.setText("Số lượng: " + item.getSL());
 

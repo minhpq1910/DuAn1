@@ -49,14 +49,6 @@
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/tvSL"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="SL"
-                    android:textColor="@color/black"
-                    android:textSize="14dp"
-                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvGia"

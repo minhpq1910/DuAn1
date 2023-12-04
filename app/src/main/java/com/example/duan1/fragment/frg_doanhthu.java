@@ -17,8 +17,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.duan1.R;
+import com.example.duan1.adapter.doanhThuAdapter;
 import com.example.duan1.adapter.hoaDonAdapter;
 import com.example.duan1.adapter.topAdapter;
 import com.example.duan1.dao.hoaDonDao;
@@ -34,8 +36,11 @@ public class frg_doanhthu extends Fragment {
     Button btnDoanhThu, btnhomnay;
     EditText edTuNgay, edDenNgay;
     TextView tvDoanhThu;
-
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+    ListView lvTop;
+    hoaDonDao dao;
+    ArrayList<top10> list;
+    doanhThuAdapter adapter;
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     int mYear, mMonth, mDay;
     private static String currentUser;
 
@@ -57,7 +62,18 @@ public class frg_doanhthu extends Fragment {
         tvDoanhThu = v.findViewById(R.id.tvDoanhThu);
         btnDoanhThu = v.findViewById(R.id.btnDoanhThu);
         btnhomnay = v.findViewById(R.id.btnhomnay);
-        ;
+        lvTop = v.findViewById(R.id.lvTop);
+
+        lvTop = v.findViewById(R.id.lvTop);
+        list = new ArrayList<>();
+        adapter = new doanhThuAdapter(getContext(), this, list);
+        lvTop.setAdapter(adapter);
+
+
+        hienToday();
+        doanhThu();
+        doanhThuToday();
+
         edTuNgay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,9 +97,6 @@ public class frg_doanhthu extends Fragment {
                 d.show();
             }
         });
-        doanhThu();
-        doanhThuToday();
-
         return v;
     }
 
@@ -121,8 +134,10 @@ public class frg_doanhthu extends Fragment {
                     hoaDonDao hoaDonDao = new hoaDonDao(getActivity());
                     int todayRevenue = hoaDonDao.getDoanhThuForUser(currentUser, sdf.format(new Date()), sdf.format(new Date()));
                     tvDoanhThu.setText(todayRevenue + " VND");
+                    ProductsUser(currentUser, sdf.format(new Date()), sdf.format(new Date()));
                 }
             });
+
         } else {
             btnhomnay.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -130,6 +145,7 @@ public class frg_doanhthu extends Fragment {
                     hoaDonDao hoaDonDao = new hoaDonDao(getActivity());
                     int todayRevenue = hoaDonDao.getDoanhThu(sdf.format(new Date()), sdf.format(new Date()));
                     tvDoanhThu.setText(todayRevenue + " VND");
+                    displayTopProducts(sdf.format(new Date()), sdf.format(new Date()));
                 }
             });
         }
@@ -146,9 +162,14 @@ public class frg_doanhthu extends Fragment {
                     String tuNgay = edTuNgay.getText().toString();
                     String denNgay = edDenNgay.getText().toString();
                     hoaDonDao hoaDonDao = new hoaDonDao(getActivity());
-                    int doanhThu = hoaDonDao.getDoanhThuForUser(currentUser, tuNgay, denNgay);
-                    tvDoanhThu.setText(doanhThu + " VND");
+                    if (tuNgay.isEmpty() || denNgay.isEmpty()) {
+                        Toast.makeText(getContext(), "Vui lòng chọn ngày", Toast.LENGTH_SHORT).show();
+                    } else {
+                        int doanhThu = hoaDonDao.getDoanhThuForUser(currentUser, tuNgay, denNgay);
+                        tvDoanhThu.setText(doanhThu + " VND");
+                        ProductsUser(currentUser, tuNgay, denNgay);
 
+                    }
                 }
             });
         } else {
@@ -158,12 +179,54 @@ public class frg_doanhthu extends Fragment {
                     String tuNgay = edTuNgay.getText().toString();
                     String denNgay = edDenNgay.getText().toString();
                     hoaDonDao hoaDonDao = new hoaDonDao(getActivity());
-
-                    int doanhThu = hoaDonDao.getDoanhThu(tuNgay, denNgay);
+                    if (tuNgay.isEmpty() || denNgay.isEmpty()) {
+                        Toast.makeText(getContext(), "Vui lòng chọn ngày", Toast.LENGTH_SHORT).show();
+                    } else {
+                        int doanhThu = hoaDonDao.getDoanhThu(tuNgay, denNgay);
 //                    Log.d("DEBUG", "onClick - Doanh Thu: " + doanhThu);
-                    tvDoanhThu.setText(doanhThu + " VND");
+                        tvDoanhThu.setText(doanhThu + " VND");
+
+                        displayTopProducts(tuNgay, denNgay);
+                    }
                 }
             });
         }
+    }
+
+    public void hienToday() {
+        SharedPreferences pref = getActivity().getSharedPreferences("LoaiTK_File", Context.MODE_PRIVATE);
+        String loaiTaiKhoan = pref.getString("LoaiTaiKhoan", "");
+        Log.d("LoaiTaiKhoan", loaiTaiKhoan);
+        if ("nhanvien".equals(loaiTaiKhoan)) {
+            hoaDonDao hoaDonDao = new hoaDonDao(getActivity());
+            int todayRevenue = hoaDonDao.getDoanhThuForUser(currentUser, sdf.format(new Date()), sdf.format(new Date()));
+            tvDoanhThu.setText(todayRevenue + " VND");
+            ProductsUser(currentUser, sdf.format(new Date()), sdf.format(new Date()));
+        } else {
+            hoaDonDao hoaDonDao = new hoaDonDao(getActivity());
+            int todayRevenue = hoaDonDao.getDoanhThu(sdf.format(new Date()), sdf.format(new Date()));
+            tvDoanhThu.setText(todayRevenue + " VND");
+            displayTopProducts(sdf.format(new Date()), sdf.format(new Date()));
+
+        }
+    }
+
+    private void displayTopProducts(String tuNgay, String denNgay) {
+        // Lấy danh sách sản phẩm hàng đầu dựa trên khoảng thời gian
+        hoaDonDao hoaDonDao = new hoaDonDao(getActivity());
+        ArrayList<top10> danhSachSanPhamHangDau = (ArrayList<top10>) hoaDonDao.getProducts(tuNgay, denNgay);
+
+        // Cập nhật bộ chuyển đổi hoặc thành phần giao diện người dùng của bạn với danh sách mới
+        adapter = new doanhThuAdapter(getContext(), this, danhSachSanPhamHangDau);
+        lvTop.setAdapter(adapter);
+    }
+
+    private void ProductsUser(String user, String tuNgay, String denNgay) {
+        hoaDonDao hoaDonDao = new hoaDonDao(getActivity());
+        ArrayList<top10> danhSachSanPhamHangDau = (ArrayList<top10>) hoaDonDao.getProductsUser(user, tuNgay, denNgay);
+        // Cập nhật bộ chuyển đổi hoặc thành phần giao diện người dùng của bạn với danh sách mới
+        adapter = new doanhThuAdapter(getContext(), this, danhSachSanPhamHangDau);
+        Log.d("DEBUG", "Size of danhSachSanPhamHangDau: " + danhSachSanPhamHangDau.size());
+        lvTop.setAdapter(adapter);
     }
 }

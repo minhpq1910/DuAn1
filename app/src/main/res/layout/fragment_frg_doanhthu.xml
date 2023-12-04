@@ -10,13 +10,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:background="#28CDDC39"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
             android:orientation="horizontal">
 
             <TextView
@@ -31,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
-                android:hint="YYYY//MM//DD"
+                android:hint="DD//MM//YYYY"
                 android:textSize="15dp" />
 
             <TextView
@@ -45,7 +46,7 @@
                 android:id="@+id/edDenNgay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="YYYY//MM//DD"
+                android:hint="DD//MM//YYYY"
                 android:textSize="15dp" />
 
         </LinearLayout>
@@ -55,10 +56,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:backgroundTint="@color/green_A400"
-            android:text="Áp dụng"
-            android:textSize="15dp" />
+            android:text="Áp dụng" />
     </LinearLayout>
 
     <Button
@@ -67,6 +67,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
+        android:background="@drawable/khung"
+        android:shadowColor="@color/blue_A400"
         android:text="Hôm nay"
         android:textSize="20dp" />
 
@@ -90,5 +92,35 @@
         android:textColor="@color/green_A400"
         android:textSize="25dp"
         android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="140dp"
+            android:text="Sản phẩm đã bán"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Số lượng"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lvTop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" />
 
 </LinearLayout>

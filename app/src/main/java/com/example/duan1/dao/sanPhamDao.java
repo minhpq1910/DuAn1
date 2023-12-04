@@ -23,7 +23,6 @@ public class sanPhamDao {
     public long insert(sanpham obj) {
         ContentValues values = new ContentValues();
         values.put("TenSP", obj.getTenSP());
-        values.put("SL", obj.getSL());
         values.put("Gia", obj.getGia());
         values.put("MaLoai", obj.getMaLoaiH());
         values.put("Avt", obj.getUrlAvt());
@@ -33,7 +32,6 @@ public class sanPhamDao {
     public long update(sanpham obj) {
         ContentValues values = new ContentValues();
         values.put("TenSP", obj.getTenSP());
-        values.put("SL", obj.getSL());
         values.put("Gia", obj.getGia());
         values.put("MaLoai", obj.getMaLoaiH());
         values.put("Avt", obj.getUrlAvt());
@@ -63,7 +61,6 @@ public class sanPhamDao {
             sanpham obj = new sanpham();
             obj.setMaSP(Integer.parseInt(cursor.getString(cursor.getColumnIndex("MaSP"))));
             obj.setTenSP(cursor.getString(cursor.getColumnIndex("TenSP")));
-            obj.setSL(Integer.parseInt(cursor.getString(cursor.getColumnIndex("SL"))));
             obj.setGia(Integer.parseInt(cursor.getString(cursor.getColumnIndex("Gia"))));
             obj.setMaLoaiH(Integer.parseInt(cursor.getString(cursor.getColumnIndex("MaLoai"))));
             obj.setUrlAvt(cursor.getString(cursor.getColumnIndex("Avt")));

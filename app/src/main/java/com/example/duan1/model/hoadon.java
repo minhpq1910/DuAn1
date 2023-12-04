@@ -4,22 +4,10 @@ import java.util.Date;
 
 public class hoadon {
     private int MaHD, MaSP;
-    private String MaNV;
+    private String HoTenNV;
     private int SL, Gia, TrangThai;
     private Date ngay;
-    private String HoTenNV;
     public hoadon() {
-    }
-
-    public hoadon(int maHD, int maSP, String maNV, int SL, int gia, int trangThai, Date ngay, String hoTenNV) {
-        MaHD = maHD;
-        MaSP = maSP;
-        MaNV = maNV;
-        this.SL = SL;
-        Gia = gia;
-        TrangThai = trangThai;
-        this.ngay = ngay;
-        HoTenNV = hoTenNV;
     }
 
     public int getMaHD() {
@@ -38,12 +26,12 @@ public class hoadon {
         MaSP = maSP;
     }
 
-    public String getMaNV() {
-        return MaNV;
+    public String getHoTenNV() {
+        return HoTenNV;
     }
 
-    public void setMaNV(String maNV) {
-        MaNV = maNV;
+    public void setHoTenNV(String hoTenNV) {
+        HoTenNV = hoTenNV;
     }
 
     public int getSL() {
@@ -76,13 +64,5 @@ public class hoadon {
 
     public void setNgay(Date ngay) {
         this.ngay = ngay;
-    }
-
-    public String getHoTenNV() {
-        return HoTenNV;
-    }
-
-    public void setHoTenNV(String hoTenNV) {
-        HoTenNV = hoTenNV;
     }
 }

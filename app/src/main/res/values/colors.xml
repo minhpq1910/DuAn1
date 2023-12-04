@@ -22,7 +22,7 @@
     <color name="gray_800">#212121</color>
     <color name="blue_gray_400">#78909C</color>
     <color name="gray_d9d">#d9d9d9</color>
-
+    <color name="colorAccent">#FF4081</color>
     <color name="gray_4d0">#4d000000</color>
     <color name="gray_80d">#80d9d9d9</color>
     <color name="gray_4dd">#4dd9d9d9</color>

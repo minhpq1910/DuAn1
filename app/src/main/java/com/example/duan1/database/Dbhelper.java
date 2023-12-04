@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Dbhelper extends SQLiteOpenHelper {
     public Dbhelper(Context context) {
-        super(context, "shop", null, 20);
+        super(context, "shop", null, 2);
     }
 
     @Override
@@ -20,8 +20,8 @@ public class Dbhelper extends SQLiteOpenHelper {
 
         // Tạo bảng nhân viên
         String tb_NhanVien = "create table NhanVien(" +
-                "taiKhoan text primary key," +
-                "HoTen text not null," +
+                "HoTen text primary key," +
+                "taiKhoan text not null," +
                 "MatKhau text not null," +
                 "Avt text not null)";
         db.execSQL(tb_NhanVien);
@@ -36,7 +36,6 @@ public class Dbhelper extends SQLiteOpenHelper {
         String tb_SanPham = "create table SanPham(" +
                 "MaSP integer primary key autoincrement," +
                 "TenSP text not null," +
-                "SL integer not null," +
                 "Gia integer not null," +
                 "MaLoai integer references LoaiHang(MaLoai)," +
                 "Avt text not null)";
@@ -46,7 +45,7 @@ public class Dbhelper extends SQLiteOpenHelper {
         String tb_HoaDon = "create table HoaDon(" +
                 "MaHD integer primary key autoincrement," +
                 "MaSP integer references SanPham(MaSP)," +
-                "taiKhoan text references NhanVien(taiKhoan)," +
+                "HoTen text not null," +
                 "SL integer not null," +
                 "Gia integer not null," +
                 "TrangThai integer not null," +
@@ -56,11 +55,11 @@ public class Dbhelper extends SQLiteOpenHelper {
         //data mẫu
         db.execSQL("INSERT INTO admin VALUES ('admin','Admin','1111')");
         db.execSQL("INSERT INTO LoaiHang VALUES (1, 'Đồ ăn'),(2,'Nước uống'),(3, 'Đồ phụ gia')");
-        db.execSQL("INSERT INTO SanPham VALUES (1, 'BimBim', 25, 5000, 1,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZCw7s_SSZDwXbvJm2ztlAmv01xd3ovChqAw&usqp=CAU'), (2, 'Coca-cola', 100, 16000, 2, 'https://tienthanhltd.com.vn/assets/shops/2018_09/cocacola15l.jpg'), (3, 'Mì chính', 50, 50000, 3, 'https://pvmarthanoi.com.vn/wp-content/uploads/2023/02/bot-ngot-ajinomoto-goi-1kg-201912111050340356-500x600.jpg')");
-        db.execSQL("INSERT INTO NhanVien VALUES ('nv01','Phạm Quang Minh','1111','https://i.pinimg.com/originals/4d/86/5e/4d865ea47a8675d682ff35ad904a0af6.png'),('nv02','Dương Quang Tùng','123abc','https://i.pinimg.com/736x/c9/b7/93/c9b7932fb30503df0d6e80c28cb8dcb3.jpg')");
-        db.execSQL("INSERT INTO HoaDon VALUES (1,2,'nv01', 2, 32000, 1, '2023/11/18')," +
-                "(2,1,'nv01', 3, 15000, 1, '2023/11/18')," +
-                "(3,2,'nv02', 1, 16000, 1, '2023/11/18')");
+        db.execSQL("INSERT INTO SanPham VALUES (1, 'BimBim', 5000, 1,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZCw7s_SSZDwXbvJm2ztlAmv01xd3ovChqAw&usqp=CAU'), (2, 'Coca-cola', 16000, 2, 'https://tienthanhltd.com.vn/assets/shops/2018_09/cocacola15l.jpg'), (3, 'Mì chính', 50000, 3, 'https://pvmarthanoi.com.vn/wp-content/uploads/2023/02/bot-ngot-ajinomoto-goi-1kg-201912111050340356-500x600.jpg')");
+        db.execSQL("INSERT INTO NhanVien VALUES ('Phạm Quang Minh','nv01','1111','https://i.pinimg.com/originals/4d/86/5e/4d865ea47a8675d682ff35ad904a0af6.png'),('Dương Quang Tùng','nv02','123abc','https://i.pinimg.com/736x/c9/b7/93/c9b7932fb30503df0d6e80c28cb8dcb3.jpg')");
+        db.execSQL("INSERT INTO HoaDon VALUES (1,2,'Phạm Quang Minh', 2, 32000, 1, '01/12/2023')," +
+                "(2,1,'Dương Quang Tùng', 3, 15000, 1, '01/12/2023')," +
+                "(3,2,'Admin', 1, 16000, 1, '01/12/2023')");
 
     }
 

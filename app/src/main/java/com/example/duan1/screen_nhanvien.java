@@ -55,8 +55,12 @@ public class screen_nhanvien extends AppCompatActivity {
         NavigationUser();
 
         //lấy thông tin người đăng nhập
-        String userName = getIntent().getStringExtra("NV");
-        frg_doanhthu.setUserInfo(userName);
+        String tennv = getIntent().getStringExtra("NV");
+        nvDao = new nhanVienDao(this);
+        nhanVien nvien = nvDao.getID(tennv);
+        String username = nvien.getHoTen();
+        frg_doanhthu.setUserInfo(username);
+        frg_hoadon.setUser(tennv);
 
 
         navigationView_nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

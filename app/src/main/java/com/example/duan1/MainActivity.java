@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.duan1.dao.adminDao;
+import com.example.duan1.dao.nhanVienDao;
 import com.example.duan1.fragment.frg_addNv;
 import com.example.duan1.fragment.frg_doanhthu;
 import com.example.duan1.fragment.frg_doimatkhau;
@@ -29,6 +30,7 @@ import com.example.duan1.fragment.frg_nhanvien;
 import com.example.duan1.fragment.frg_sanpham;
 import com.example.duan1.fragment.frg_top;
 import com.example.duan1.model.admin;
+import com.example.duan1.model.nhanVien;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -54,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
         NavigationUser();
 
+        //lấy thông tin người đăng nhập
+        String tennv = getIntent().getStringExtra("ADMIN");
+        frg_hoadon.setAd(tennv);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

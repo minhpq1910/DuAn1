@@ -42,7 +42,7 @@ public class frg_sanpham extends Fragment {
     List<sanpham> list;
     FloatingActionButton fab;
     Dialog dialog;
-    EditText edMaSP, edTenSP, edSL, edGia, edAvt;
+    EditText edMaSP, edTenSP, edGia, edAvt;
     Spinner spinner;
     Button btnSave, btnCancel;
 
@@ -52,7 +52,6 @@ public class frg_sanpham extends Fragment {
     loaihang loaiHang;
     int maLoaiH, position;
     private SearchView searchView;
-    private String loaiTaiKhoan;
 
     public frg_sanpham() {
         // Required empty public constructor
@@ -117,7 +116,6 @@ public class frg_sanpham extends Fragment {
         dialog.setContentView(R.layout.dialog_sanpham);
         edMaSP = dialog.findViewById(R.id.edMaSP);
         edTenSP = dialog.findViewById(R.id.edTenSP);
-        edSL = dialog.findViewById(R.id.edSL);
         spinner = dialog.findViewById(R.id.spLoaiH);
         edGia = dialog.findViewById(R.id.edGia);
         edAvt = dialog.findViewById(R.id.edAvt);
@@ -147,7 +145,6 @@ public class frg_sanpham extends Fragment {
         if (type != 0) {
             edMaSP.setText(String.valueOf(item.getMaSP()));
             edTenSP.setText(item.getTenSP());
-            edSL.setText(String.valueOf(item.getSL()));
             edGia.setText(String.valueOf(item.getGia()));
             edAvt.setText(item.getUrlAvt());
             for (int i = 0; i < listLoaiH.size(); i++)
@@ -168,7 +165,6 @@ public class frg_sanpham extends Fragment {
             public void onClick(View v) {
                 item = new sanpham();
                 item.setTenSP(edTenSP.getText().toString());
-                item.setSL(parseInt(edSL.getText().toString(), 0));
                 item.setMaLoaiH(maLoaiH);
                 item.setGia(parseInt(edGia.getText().toString(), 0));
                 item.setUrlAvt(edAvt.getText().toString());
@@ -199,15 +195,11 @@ public class frg_sanpham extends Fragment {
     public int validate() {
         int check = -1;
 
-        if (edTenSP.getText().length() == 0 || edSL.getText().length() == 0 || edGia.getText().length() == 0 || edAvt.getText().length() == 0) {
+        if (edTenSP.getText().length() == 0 || edGia.getText().length() == 0 || edAvt.getText().length() == 0) {
             Toast.makeText(getContext(), "Bạn phải nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
         } else {
-            String sl = edSL.getText().toString().trim();
             String gia = edGia.getText().toString().trim();
-
-            if (!TextUtils.isDigitsOnly(sl) || Integer.parseInt(sl) <= 0) {
-                Toast.makeText(getContext(), "Số lượng phải là số lớn hơn 0", Toast.LENGTH_SHORT).show();
-            } else if (!TextUtils.isEmpty(gia)) {
+            if (!TextUtils.isEmpty(gia)) {
                 try {
                     double giaValue = Double.parseDouble(gia);
                     if (giaValue <= 0) {
